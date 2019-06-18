@@ -4,7 +4,7 @@
 # https://www.facebook.com/hackercup/problem/589264531559040/
 #
 # Time:  O(E)
-# Space: O(E)
+# Space: O(D), D is the depth of expression
 #
 
 def calc(operator, x, y):
@@ -14,18 +14,18 @@ def calc(operator, x, y):
         return x | y
     return x ^ y
 
-def evaluate(E, curr):
+def evaluate(E, curr, lookup):
     left, operator, right = None, None, None
     while curr[0] != len(E) and E[curr[0]] != ")":
-        if E[curr[0]] in ('0', '1'):
+        if E[curr[0]] in lookup:
             if left is None:
-                left = int(E[curr[0]])
+                left = lookup[E[curr[0]]]
             else:
-                right = int(E[curr[0]])
+                right = lookup[E[curr[0]]]
             curr[0] += 1
         elif E[curr[0]] == '(':
             curr[0] += 1
-            tmp = evaluate(E, curr)
+            tmp = evaluate(E, curr, lookup)
             if left is None:
                 left = tmp
             else:
@@ -40,8 +40,9 @@ def evaluate(E, curr):
 
 def mr_x():
     E = raw_input()
-    return evaluate(E.replace('x', '0').replace('X', '1'), [0]) ^ \
-           evaluate(E.replace('x', '1').replace('X', '0'), [0])
+    lookup1 = {'0':0,'1':1, 'x':0 ,'X':1}
+    lookup2 = {'0':0,'1':1, 'x':1 ,'X':0}
+    return evaluate(E, [0], lookup1) ^ evaluate(E, [0], lookup2)
 
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, mr_x())
