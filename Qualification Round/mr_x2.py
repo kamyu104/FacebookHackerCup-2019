@@ -40,9 +40,8 @@ def evaluate(E, curr, lookup):
 
 def mr_x():
     E = raw_input()
-    lookup1 = {'0':0,'1':1, 'x':0 ,'X':1}
-    lookup2 = {'0':0,'1':1, 'x':1 ,'X':0}
-    return evaluate(E, [0], lookup1) ^ evaluate(E, [0], lookup2)
+    return evaluate(E, [0], {'0':0,'1':1, 'x':0 ,'X':1}) ^ \
+           evaluate(E, [0], {'0':0,'1':1, 'x':1 ,'X':0})
 
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, mr_x())
