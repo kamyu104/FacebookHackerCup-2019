@@ -4,7 +4,7 @@
 # https://www.facebook.com/hackercup/problem/589264531559040/
 #
 # Time:  O(E)
-# Space: O(D), D is the depth of expression
+# Space: O(E)
 #
 
 def mr_x():
