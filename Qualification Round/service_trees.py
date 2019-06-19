@@ -48,14 +48,14 @@ def build_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):
         subtrees.append(subtree)
     return True
 
-def backtracking(LCAs, parent, tree, result):
+def backtracking(LCAs, parent, tree, result):  # at most visit N times => Time: N * N * O(M + N) = O(N^2* (N + M))
     tree_set = set(tree)
-    for root in tree:
+    for root in tree:  # at most N times
         not_neighbors, neighbors = defaultdict(set), defaultdict(set)
-        if not make_root(LCAs, root, tree_set, not_neighbors, neighbors):
+        if not make_root(LCAs, root, tree_set, not_neighbors, neighbors):  # Time: O(M)
             continue
         subtrees = []
-        if not build_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):
+        if not build_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):  # Time: O(N)
             continue
         result[root] = parent
         for subtree in subtrees:
