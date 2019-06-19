@@ -62,7 +62,6 @@ def backtracking(LCAs, parent, tree, result):
             if not backtracking(LCAs, root, subtree, result):
                 return False
         return True
-	return False
 
 def service_trees():
     N, M = map(int, raw_input().strip().split())
