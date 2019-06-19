@@ -26,7 +26,7 @@ def make_root(LCAs, root, tree_set, not_neighbors, neighbors):
             neighbors[Z].add(X)
     return True
 
-def build_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):
+def make_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):
     lookup = set([root])
     for node in tree:
         if node in lookup:
@@ -55,7 +55,7 @@ def backtracking(LCAs, parent, tree, result):  # at most visit N times => Time: 
         if not make_root(LCAs, root, tree_set, not_neighbors, neighbors):  # Time: O(M)
             continue
         subtrees = []
-        if not build_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):  # Time: O(N)
+        if not make_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):  # Time: O(N)
             continue
         result[root] = parent
         for subtree in subtrees:
