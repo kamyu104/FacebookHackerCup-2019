@@ -3,7 +3,7 @@
 # Facebook Hacker Cup 2019 Qualification Round - Trees as a Service
 # https://www.facebook.com/hackercup/problem/330920680938986/
 #
-# Time:  O(N^2* (N + M))
+# Time:  O(N^2 * (N + M))
 # Space: O(N)
 #
 
@@ -48,7 +48,7 @@ def make_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):
         subtrees.append(subtree)
     return True
 
-def dfs(LCAs, parent, tree, result):  # at most visit N times => Time: N * N * O(M + N) = O(N^2* (N + M))
+def dfs(LCAs, parent, tree, result):  # at most visit N times => Time: N * N * O(M + N) = O(N^2 * (N + M))
     tree_set = set(tree)
     for root in tree:  # at most N times
         not_neighbors, neighbors = defaultdict(set), defaultdict(set)
