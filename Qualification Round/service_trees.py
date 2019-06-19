@@ -48,7 +48,7 @@ def make_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):
         subtrees.append(subtree)
     return True
 
-def dfs(LCAs, parent, tree, result):  # at most visit N times => Time: N * N * O(M + N) = O(N^2 * (N + M))
+def service_trees_helper(LCAs, parent, tree, result):  # at most visit N times => Time: N * N * O(M + N) = O(N^2 * (N + M))
     tree_set = set(tree)
     for root in tree:  # at most N times
         not_neighbors, neighbors = defaultdict(set), defaultdict(set)
@@ -59,8 +59,8 @@ def dfs(LCAs, parent, tree, result):  # at most visit N times => Time: N * N * O
             continue
         result[root] = parent
         for subtree in subtrees:
-            if not dfs(LCAs, root, subtree, result):
-                return False  # make dfs called at most N times
+            if not service_trees_helper(LCAs, root, subtree, result):
+                return False  # make service_trees_helper called at most N times
         return True
     return False
 
@@ -72,7 +72,7 @@ def service_trees():
         LCAs.append((X-1, Y-1, Z-1))
 
     result = [-1]*N
-    if dfs(LCAs, -1, range(N), result):
+    if service_trees_helper(LCAs, -1, range(N), result):
         return " ".join(map(lambda x: str(x+1), result))
     return "Impossible"
 
