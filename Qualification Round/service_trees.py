@@ -60,7 +60,7 @@ def backtracking(LCAs, parent, tree, result):  # at most visit N times => Time: 
         result[root] = parent
         for subtree in subtrees:
             if not backtracking(LCAs, root, subtree, result):
-                return False
+                return False  # make backtracking called at most N times
         return True
     return False
 
