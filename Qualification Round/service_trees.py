@@ -7,7 +7,7 @@
 # Space: O(N)
 #
 
-from collections import defaultdict, deque
+from collections import defaultdict
 
 def make_root(LCAs, root, tree_set, not_neighbors, neighbors):
     for X, Y, Z in LCAs:
@@ -32,14 +32,14 @@ def build_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):
         if node in lookup:
             continue
         subtree = []
-        q = deque([node])
+        stk = [node]
         lookup.add(node)
-        while q:
-            node = q.popleft()
+        while stk:
+            node = stk.pop()
             subtree.append(node)
             for neighbor in neighbors[node]:
                 if neighbor not in lookup:
-                    q.append(neighbor)
+                    stk.append(neighbor)
                     lookup.add(neighbor)
         for i in xrange(len(subtree)):
             for j in xrange(i):
