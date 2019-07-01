@@ -35,6 +35,7 @@ def connect_the_dots():
     for i in xrange(N+1):
         if i:
             if (dots[i-1][1], i) < convert(max_heap[0]):
+                heappush(min_heap, convert(heappop(max_heap)))
                 heappush(max_heap, convert((dots[i-1][1], i)))
             else:
                 heappush(min_heap, (dots[i-1][1], i))
@@ -42,9 +43,7 @@ def connect_the_dots():
         if V-f < 0:
             continue
         g = max(0, min(N-H, V)-f)
-        while len(max_heap) > g+1:
-            heappush(min_heap, convert(heappop(max_heap)))
-        while len(max_heap) < g+1:
+        while len(max_heap) < g+1:  # totally at most N times
             heappush(max_heap, convert(heappop(min_heap)))
         result = min(result, \
                      (dots[i-1][0] if i else 0) + \
