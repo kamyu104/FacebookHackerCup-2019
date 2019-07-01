@@ -69,33 +69,36 @@ def ladders_and_snakes():
         X[i], A[i], B[i] = map(int, raw_input().strip().split())
 
     dinic = Dinic(N+2)
+
+    # Time: O(N^3 * logN)
     for i in xrange(N):
         if A[i] == 0:
             dinic.addEdge(N, i, MAX_WEIGHT)
         if B[i] == H:
             dinic.addEdge(i, N+1, MAX_WEIGHT)
         for j in xrange(N):
-            if X[i] < X[j]:
-                points = []
-                for k in xrange(N):
-                    if X[i] <= X[k] <= X[j]:
-                        points.append((A[k], 1, k))
-                        points.append((B[k], 0, k))
-                points.sort()
-                lookup = set()
-                length = 0
-                for k in xrange(len(points)):
-                    if points[k][1]:  # start
-                        lookup.add(points[k][2])
-                    else:  # end
-                        lookup.remove(points[k][2])
-                    if (len(lookup)) == 2 and (i in lookup) and (j in lookup):
-                        length += points[k+1][0]-points[k][0]
-                if length:
-                    dinic.addEdge(i, j, length)
-                    dinic.addEdge(j, i, length)
+            if not (X[i] < X[j]):
+                continue
+            points = []
+            for k in xrange(N):
+                if X[i] <= X[k] <= X[j]:
+                    points.append((A[k], 1, k))
+                    points.append((B[k], 0, k))
+            points.sort()
+            lookup = set()
+            length = 0
+            for k in xrange(len(points)):
+                if points[k][1]:  # start
+                    lookup.add(points[k][2])
+                else:  # end
+                    lookup.remove(points[k][2])
+                if (len(lookup)) == 2 and (i in lookup) and (j in lookup):
+                    length += points[k+1][0]-points[k][0]
+            if length:
+                dinic.addEdge(i, j, length)
+                dinic.addEdge(j, i, length)
 
-    result = dinic.calc(N, N+1)
+    result = dinic.calc(N, N+1)  # Time:  O(N^4)
     return result if result < MAX_WEIGHT else -1
 
 MAX_N = 50
