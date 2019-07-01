@@ -77,21 +77,21 @@ def ladders_and_snakes():
             dinic.addEdge(i, N+1, MAX_WEIGHT)
         for j in xrange(N):
             if X[i] < X[j]:
-                edges = []
+                points = []
                 for k in xrange(N):
                     if X[i] <= X[k] <= X[j]:
-                        edges.append((A[k], 1, k))
-                        edges.append((B[k], 0, k))
-                edges.sort()
+                        points.append((A[k], 1, k))
+                        points.append((B[k], 0, k))
+                points.sort()
                 lookup = set()
                 length = 0
-                for k in xrange(len(edges)):
-                    if edges[k][1]:  # start
-                        lookup.add(edges[k][2])
+                for k in xrange(len(points)):
+                    if points[k][1]:  # start
+                        lookup.add(points[k][2])
                     else:  # end
-                        lookup.remove(edges[k][2])
+                        lookup.remove(points[k][2])
                     if (len(lookup)) == 2 and (i in lookup) and (j in lookup):
-                        length += edges[k+1][0]-edges[k][0]
+                        length += points[k+1][0]-points[k][0]
                 if length:
                     dinic.addEdge(i, j, length)
                     dinic.addEdge(j, i, length)
