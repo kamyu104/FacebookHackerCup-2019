@@ -9,8 +9,6 @@
 
 from collections import deque
 
-TO, CAP, REV = range(3)
-
 class Dinic(object):
 
     def __init__(self, n):
@@ -44,8 +42,8 @@ class Dinic(object):
                 if lev[to] > lev[v]:
                     t = augment(S, T, to, min(f, cap), lev, adj, done)
                     if t > 0:
-                        adj[v][done[v]][CAP] -= t
-                        adj[to][rev][CAP] += t
+                        adj[v][done[v]][1] -= t
+                        adj[to][rev][1] += t
                         return t
                 done[v] += 1
 
