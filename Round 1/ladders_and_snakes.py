@@ -64,26 +64,24 @@ class Dinic(object):
 
 def ladders_and_snakes():
     N, H = map(int, raw_input().strip().split())
-    X, A, B = [0]*N, [0]*N, [0]*N
+    segments = []
     for i in xrange(N):
-        X[i], A[i], B[i] = map(int, raw_input().strip().split())
+        segments.append(map(int, raw_input().strip().split()))
 
     dinic = Dinic(N+2)
 
     # Time: O(N^3 * logN)
+    segments.sort()
     for i in xrange(N):
-        if A[i] == 0:
+        if segments[i][1] == 0:
             dinic.addEdge(N, i, Dinic.max_weight)
-        if B[i] == H:
+        if segments[i][2] == H:
             dinic.addEdge(i, N+1, Dinic.max_weight)
-        for j in xrange(N):
-            if not (X[i] < X[j]):
-                continue
+        for j in xrange(i+1, N):
             points = []
-            for k in xrange(N):
-                if X[i] <= X[k] <= X[j]:
-                    points.append((A[k], 1, k))
-                    points.append((B[k], 0, k))
+            for k in xrange(i, j+1):
+                points.append((segments[k][1], 1, k))
+                points.append((segments[k][2], 0, k))
             points.sort()
             lookup = set()
             length = 0
