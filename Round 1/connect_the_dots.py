@@ -42,8 +42,8 @@ def connect_the_dots():
         f = N-i
         if V-f < 0:
             continue
-        g = max(0, min(N-H, V)-f)
-        while len(max_heap) < g+1:  # totally at most N times
+        g = max(0, min(N-H, V)-f)  # g is increasing
+        if len(max_heap) < g+1:  # totally at most N times
             heappush(max_heap, convert(heappop(min_heap)))
         result = min(result, \
                      (dots[i-1][0] if i else 0) + \
