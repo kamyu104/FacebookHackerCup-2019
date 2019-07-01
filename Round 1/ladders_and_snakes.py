@@ -16,9 +16,8 @@ class Dinic(object):
             self.c = c
             self.f = f
 
-    def __init__(self, n, inf):
+    def __init__(self, n):
         self.adj = [[] for _ in xrange(n)]
-        self.inf = inf
     
     def addEdge(self, a, b, c):
         self.adj[a].append(self.Edge(b, len(self.adj[b]), c, 0))
@@ -39,12 +38,11 @@ class Dinic(object):
                 ptr[v] += 1
             return 0
 
-        LIMIT = self.inf.bit_length()
         flow = 0
         adj = self.adj
         q = [0]*len(adj)
         q[0] = s
-        for l in reversed(xrange(LIMIT)):
+        for l in reversed(xrange(MAX_LEVEL)):
             while True:
                 lvl = [0]*(len(q))
                 ptr = [0]*(len(q))
@@ -58,10 +56,10 @@ class Dinic(object):
                             q[qe] = e.to
                             qe += 1
                             lvl[e.to] = lvl[v] + 1
-                p = dfs(adj, lvl, ptr, s, t, INF)
+                p = float("inf")
                 while p:
+                    p = dfs(adj, lvl, ptr, s, t, float("inf"))
                     flow += p
-                    p = dfs(adj, lvl, ptr, s, t, INF)
                 if not lvl[t]:
                     break
         return flow
@@ -72,7 +70,7 @@ def ladders_and_snakes():
     for i in xrange(N):
         X[i], A[i], B[i] = map(int, raw_input().strip().split())
 
-    dinic = Dinic(N+2, INF)
+    dinic = Dinic(N+2)
     for i in xrange(N):
         if A[i] == 0:
             dinic.addEdge(N, i, MAX_WEIGHT)
@@ -105,6 +103,6 @@ def ladders_and_snakes():
 MAX_N = 50
 MAX_H = 10**5
 MAX_WEIGHT = 2*MAX_N*MAX_H
-INF = 2*MAX_N*MAX_WEIGHT
+MAX_LEVEL = (2*MAX_N*MAX_WEIGHT).bit_length()  # 30
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, ladders_and_snakes())
