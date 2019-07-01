@@ -12,7 +12,6 @@ from collections import deque
 # Time:  O(V^2 * E)
 # Space: O(V + E)
 class Dinic(object):
-    max_weight = 10**9
 
     def __init__(self, n):
         self.adj = [[] for _ in xrange(n)]
@@ -91,9 +90,9 @@ def ladders_and_snakes():
     segments.sort()
     for i in xrange(N):
         if segments[i][1] == 0:
-            dinic.addEdge(N, i, Dinic.max_weight)
+            dinic.addEdge(N, i, INF)
         if segments[i][2] == H:
-            dinic.addEdge(i, N+1, Dinic.max_weight)
+            dinic.addEdge(i, N+1, INF)
         for j in xrange(i+1, N):
             length = line_sweep(segments, i, j)  # Time: O(NlogN)
             if length:
@@ -101,7 +100,8 @@ def ladders_and_snakes():
                 dinic.addEdge(j, i, length)
 
     result = dinic.calc(N, N+1)  # Time: O(N^4)
-    return result if result < Dinic.max_weight else -1
+    return result if result < INF else -1
 
+INF = 10**9  # a magic max weight
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, ladders_and_snakes())
