@@ -16,7 +16,7 @@ Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it 
 ## Round 1
 | # | Title | Solution | Time | Space | Difficulty | Tag | Note |
 |---| ----- | -------- | ---- | ----- | ---------- | --- | ---- |
-|1| [Graphs as a Service](https://www.facebook.com/hackercup/problem/862237970786911/)| [Python](./Round%201/graphs_as_service.py)| _O(N^3)_ | _O(N^2)_ | Easy | | Floyd Warshall Algorithm |
+|1| [Graphs as a Service](https://www.facebook.com/hackercup/problem/862237970786911/)| [Python](./Round%201/graphs_as_a_service.py)| _O(N^3)_ | _O(N^2)_ | Easy | | Floyd Warshall Algorithm |
 |2| [Class Treasurer](https://www.facebook.com/hackercup/problem/2448144345414246/)| [Python](./Round%201/class_treasurer.py)| _O(N)_ | _O(N)_ | Easy | | Greedy |
 |3| [Ladders and Snakes](https://www.facebook.com/hackercup/problem/448364075989193/)| [Python](./Round%201/ladders_and_snakes.py) | _O(N^4)_ | _O(N^2)_ | Hard | | Dinic Algorithm, Max Flow |
 |4| [Connect the Dots](https://www.facebook.com/hackercup/problem/2390352741015547//)| [Python](./Round%201/connect_the_dots.py)| _O(NlogN)_ | _O(N)_ | Hard | | Heap, Sort |
