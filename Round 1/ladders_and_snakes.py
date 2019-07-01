@@ -9,7 +9,6 @@
 
 from collections import deque
 
-
 # Time:  O(V^2 * E)
 # Space: O(V + E)
 class Dinic(object):
