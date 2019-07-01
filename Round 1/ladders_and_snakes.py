@@ -16,7 +16,7 @@ class Dinic(object):
     def __init__(self, n):
         self.adj = [[] for _ in xrange(n)]
     
-    def addEdge(self, i, j, c):
+    def add_edge(self, i, j, c):
         self.adj[i].append([j, c, len(self.adj[j])])
         self.adj[j].append([i, 0, len(self.adj[i]) - 1])
 
@@ -90,14 +90,14 @@ def ladders_and_snakes():
     segments.sort()
     for i in xrange(N):
         if segments[i][1] == 0:
-            dinic.addEdge(N, i, INF)
+            dinic.add_edge(N, i, INF)
         if segments[i][2] == H:
-            dinic.addEdge(i, N+1, INF)
+            dinic.add_edge(i, N+1, INF)
         for j in xrange(i+1, N):
             length = line_sweep(segments, i, j)  # Time: O(NlogN)
             if length:
-                dinic.addEdge(i, j, length)
-                dinic.addEdge(j, i, length)
+                dinic.add_edge(i, j, length)
+                dinic.add_edge(j, i, length)
 
     result = dinic.max_flow(N, N+1)  # Time: O(N^4)
     return result if result < INF else -1
