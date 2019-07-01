@@ -7,62 +7,61 @@
 # Space: O(N^2)
 #
 
-class Dinic(object):
+from collections import deque
 
-    class Edge(object):
-        def __init__(self, to, rev, c, f):
-            self.to = to
-            self.rev = rev
-            self.c = c
-            self.f = f
+TO, CAP, REV = range(3)
+
+class Dinic(object):
 
     def __init__(self, n):
         self.adj = [[] for _ in xrange(n)]
     
-    def addEdge(self, a, b, c):
-        self.adj[a].append(self.Edge(b, len(self.adj[b]), c, 0))
-        self.adj[b].append(self.Edge(a, len(self.adj[a]) - 1, 0, 0))
-    
-    def calc(self, s, t):
-        def dfs(adj, lvl, ptr, v, t, f):
-            if v == t or not f:
+    def addEdge(self, i, j, c):
+        self.adj[i].append([j, c, len(self.adj[j])])
+        self.adj[j].append([i, 0, len(self.adj[i]) - 1])
+
+    def calc(self, S, T):
+        def levelize(V, S, T, adj, lev):
+            for i in xrange(V):
+                lev[i] = -1
+            lev[S] = 0
+            q = deque([S])
+            while q:
+                v = q.popleft()
+                for i in xrange(len(adj[v])):
+                    to, cap, rev = adj[v][i]
+                    if cap and lev[to] == -1:
+                        lev[to] = lev[v] + 1
+                        q.append(to)
+
+            return lev[T] != -1
+
+        def augment(S, T, v, f, lev, adj, done):
+            if v == T or not f:
                 return f
-            while ptr[v] < len(self.adj[v]):
-                e = adj[v][ptr[v]]
-                if lvl[e.to] == lvl[v] + 1:
-                    p = dfs(adj, lvl, ptr, e.to, t, min(f, e.c - e.f))
-                    if p:
-                        e.f += p
-                        adj[e.to][e.rev].f -= p
-                        return p
-                ptr[v] += 1
+            while done[v] < len(adj[v]):
+                to, cap, rev = adj[v][done[v]]
+                if lev[to] > lev[v]:
+                    t = augment(S, T, to, min(f, cap), lev, adj, done)
+                    if t > 0:
+                        adj[v][done[v]][CAP] -= t
+                        adj[to][rev][CAP] += t
+                        return t
+                done[v] += 1
+
             return 0
 
-        flow = 0
         adj = self.adj
-        q = [0]*len(adj)
-        q[0] = s
-        for l in reversed(xrange(MAX_LEVEL)):
-            while True:
-                lvl = [0]*(len(q))
-                ptr = [0]*(len(q))
-                qi, qe, lvl[s] = 0, 1, 1
-                while qi < qe and not lvl[t]:
-                    v = q[qi]
-                    qi += 1
-                    for i in xrange(len(adj[v])):
-                        e = adj[v][i]
-                        if not lvl[e.to] and (e.c - e.f) >> l:
-                            q[qe] = e.to
-                            qe += 1
-                            lvl[e.to] = lvl[v] + 1
-                p = float("inf")
-                while p:
-                    p = dfs(adj, lvl, ptr, s, t, float("inf"))
-                    flow += p
-                if not lvl[t]:
-                    break
-        return flow
+        V = len(self.adj)
+        f, t = 0, 0
+        lev = [-1] * V
+        while levelize(V, S, T, adj, lev):
+            done = [0] * V
+            t = float("inf")
+            while t:
+                t = augment(S, T, S, float("inf"), lev, adj, done)
+                f += t
+        return f
 
 def ladders_and_snakes():
     N, H = map(int, raw_input().strip().split())
@@ -103,6 +102,5 @@ def ladders_and_snakes():
 MAX_N = 50
 MAX_H = 10**5
 MAX_WEIGHT = 2*MAX_N*MAX_H
-MAX_LEVEL = (2*MAX_N*MAX_WEIGHT).bit_length()  # 30
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, ladders_and_snakes())
