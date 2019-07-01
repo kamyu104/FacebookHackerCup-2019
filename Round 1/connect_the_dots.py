@@ -35,7 +35,6 @@ def connect_the_dots():
     for i in xrange(N+1):
         if i:
             if (dots[i-1][1], i) < convert(max_heap[0]):
-                heappush(min_heap, convert(heappop(max_heap)))
                 heappush(max_heap, convert((dots[i-1][1], i)))
             else:
                 heappush(min_heap, (dots[i-1][1], i))
