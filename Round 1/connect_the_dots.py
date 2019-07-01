@@ -52,6 +52,5 @@ def connect_the_dots():
                      max(convert(max_heap[0])[0], suffix_max_Y[i]))
     return result
 
-MOD = 10**9+7
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, connect_the_dots())
