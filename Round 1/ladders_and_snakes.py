@@ -88,7 +88,7 @@ def ladders_and_snakes():
 
     # Time: O(N^3 * logN)
     segments.sort()
-    total = 1
+    total = 0
     for i in xrange(N):
         for j in xrange(i+1, N):
             length = line_sweep(segments, i, j)  # Time: O(NlogN)
@@ -98,12 +98,12 @@ def ladders_and_snakes():
                 dinic.add_edge(j, i, length)
     for i in xrange(N):
         if segments[i][1] == 0:
-            dinic.add_edge(N, i, total)
+            dinic.add_edge(N, i, total+1)
         if segments[i][2] == H:
-            dinic.add_edge(i, N+1, total)
+            dinic.add_edge(i, N+1, total+1)
 
     result = dinic.max_flow(N, N+1)  # Time: O(N^4)
-    return result if result < total else -1
+    return result if result <= total else -1
 
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, ladders_and_snakes())
