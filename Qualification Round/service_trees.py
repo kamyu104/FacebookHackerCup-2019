@@ -48,7 +48,7 @@ def make_subtree(LCAs, root, tree, not_neighbors, neighbors, subtrees):
         subtrees.append(subtree)
     return True
 
-def service_trees_helper(LCAs, parent, tree, result):  # at most visit N times => Time: N * N * O(M + N) = O(N^2 * (N + M))
+def trees_as_a_service_helper(LCAs, parent, tree, result):  # at most visit N times => Time: N * N * O(M + N) = O(N^2 * (N + M))
     tree_set = set(tree)
     for root in tree:  # at most N times
         not_neighbors, neighbors = defaultdict(set), defaultdict(set)
@@ -59,12 +59,12 @@ def service_trees_helper(LCAs, parent, tree, result):  # at most visit N times =
             continue
         result[root] = parent
         for subtree in subtrees:
-            if not service_trees_helper(LCAs, root, subtree, result):
+            if not trees_as_a_service_helper(LCAs, root, subtree, result):
                 return False  # make service_trees_helper called at most N times
         return True
     return False
 
-def service_trees():
+def trees_as_a_service():
     N, M = map(int, raw_input().strip().split())
     LCAs = []
     for _ in xrange(M):
@@ -72,9 +72,9 @@ def service_trees():
         LCAs.append((X-1, Y-1, Z-1))
 
     result = [-1]*N
-    if service_trees_helper(LCAs, -1, range(N), result):
+    if trees_as_a_service_helper(LCAs, -1, range(N), result):
         return " ".join(map(lambda x: str(x+1), result))
     return "Impossible"
 
 for case in xrange(input()):
-    print 'Case #%d: %s' % (case+1, service_trees())
+    print 'Case #%d: %s' % (case+1, trees_as_a_service())
