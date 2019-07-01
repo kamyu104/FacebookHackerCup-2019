@@ -33,7 +33,6 @@ class Dinic(object):
                     if cap and lev[to] == -1:
                         lev[to] = lev[v] + 1
                         q.append(to)
-
             return lev[T] != -1
 
         def augment(S, T, v, f, lev, adj, done):
