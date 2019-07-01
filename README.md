@@ -11,7 +11,7 @@ Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it 
 |1| [Leapfrog: Ch. 1](https://www.facebook.com/hackercup/problem/656203948152907/)| [Python](./Qualification%20Round/leapfrog1.py)| _O(N)_ | _O(1)_ | Easy | | Math |
 |2| [Leapfrog: Ch. 2](https://www.facebook.com/hackercup/problem/2426282194266338/)| [Python](./Qualification%20Round/leapfrog2.py)| _O(N)_ | _O(1)_ | Easy | | Math |
 |3| [Mr. X](https://www.facebook.com/hackercup/problem/589264531559040/)| [Python](./Qualification%20Round/mr_x.py) [Python](./Qualification%20Round/mr_x2.py) | _O(E)_ | _O(D)_ | Medium | | String |
-|4| [Trees as a Service](https://www.facebook.com/hackercup/problem/330920680938986/)| [Python](./Qualification%20Round/trees_as_service.py)| _O(N^2 * (N + M))_ | _O(N)_ | Hard | | Recursion |
+|4| [Trees as a Service](https://www.facebook.com/hackercup/problem/330920680938986/)| [Python](./Qualification%20Round/trees_as_a_service.py)| _O(N^2 * (N + M))_ | _O(N)_ | Hard | | Recursion |
 
 ## Round 1
 | # | Title | Solution | Time | Space | Difficulty | Tag | Note |
