@@ -44,7 +44,7 @@ class Dinic(object):
         adj = self.adj
         q = [0]*len(adj)
         q[0] = s
-        for l in reversed(xrange(LIMIT+1)):
+        for l in reversed(xrange(LIMIT)):
             while True:
                 lvl = [0]*(len(q))
                 ptr = [0]*(len(q))
