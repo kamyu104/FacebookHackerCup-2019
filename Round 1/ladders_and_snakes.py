@@ -90,7 +90,7 @@ def ladders_and_snakes():
                     lookup.add(points[k][2])
                 else:  # end
                     lookup.remove(points[k][2])
-                if (len(lookup)) == 2 and (i in lookup) and (j in lookup):
+                if len(lookup) == 2 and i in lookup and j in lookup:
                     length += points[k+1][0]-points[k][0]
             if length:
                 dinic.addEdge(i, j, length)
