@@ -96,6 +96,7 @@ def ladders_and_snakes():
                 total += length
                 dinic.add_edge(i, j, length)
                 dinic.add_edge(j, i, length)
+    assert(total <= (N-1)*H)
     for i in xrange(N):
         if segments[i][1] == 0:
             dinic.add_edge(N, i, total+1)
