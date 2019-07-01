@@ -85,7 +85,7 @@ def ladders_and_snakes():
                 points.sort()
                 lookup = set()
                 length = 0
-                for k in xrange(len(points)):
+                for k in xrange(len(points)-1):
                     if points[k][1]:  # start
                         lookup.add(points[k][2])
                     else:  # end
