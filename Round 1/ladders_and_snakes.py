@@ -7,61 +7,62 @@
 # Space: O(N^2)
 #
 
-class Edge(object):
-    def __init__(self, to, rev, c, f):
-        self.to = to
-        self.rev = rev
-        self.c = c
-        self.f = f
-
 class Dinic(object):
 
-    def __init__(self, n):
-        self.lvl = [0]*n
-        self.ptr = [0]*n
-        self.q = [0]*n
+    class Edge(object):
+        def __init__(self, to, rev, c, f):
+            self.to = to
+            self.rev = rev
+            self.c = c
+            self.f = f
+
+    def __init__(self, n, inf):
         self.adj = [[] for _ in xrange(n)]
+        self.inf = inf
     
     def addEdge(self, a, b, c):
-        self.adj[a].append(Edge(b, len(self.adj[b]), c, 0))
-        self.adj[b].append(Edge(a, len(self.adj[a]) - 1, 0, 0))
-    
-    def dfs(self, v, t, f):
-        if v == t or not f:
-            return f
-        while self.ptr[v] < len(self.adj[v]):
-            e = self.adj[v][self.ptr[v]]
-            if self.lvl[e.to] == self.lvl[v] + 1:
-                p = self.dfs(e.to, t, min(f, e.c - e.f))
-                if p:
-                    e.f += p
-                    self.adj[e.to][e.rev].f -= p
-                    return p
-            self.ptr[v] += 1
-        return 0
+        self.adj[a].append(self.Edge(b, len(self.adj[b]), c, 0))
+        self.adj[b].append(self.Edge(a, len(self.adj[a]) - 1, 0, 0))
     
     def calc(self, s, t):
+        def dfs(adj, lvl, ptr, v, t, f):
+            if v == t or not f:
+                return f
+            while ptr[v] < len(self.adj[v]):
+                e = adj[v][ptr[v]]
+                if lvl[e.to] == lvl[v] + 1:
+                    p = dfs(adj, lvl, ptr, e.to, t, min(f, e.c - e.f))
+                    if p:
+                        e.f += p
+                        adj[e.to][e.rev].f -= p
+                        return p
+                ptr[v] += 1
+            return 0
+
+        LIMIT = self.inf.bit_length()
         flow = 0
-        self.q[0] = s
+        adj = self.adj
+        q = [0]*len(adj)
+        q[0] = s
         for L in xrange(LIMIT+1):
             while True:
-                self.lvl = [0]*(len(self.q))
-                self.ptr = [0]*(len(self.q))
-                qi, qe, self.lvl[s] = 0, 1, 1
-                while qi < qe and not self.lvl[t]:
-                    v = self.q[qi]
+                lvl = [0]*(len(q))
+                ptr = [0]*(len(q))
+                qi, qe, lvl[s] = 0, 1, 1
+                while qi < qe and not lvl[t]:
+                    v = q[qi]
                     qi += 1
-                    for i in xrange(len(self.adj[v])):
-                        e = self.adj[v][i]
-                        if not self.lvl[e.to] and (e.c - e.f) >> (LIMIT - L):
-                            self.q[qe] = e.to
+                    for i in xrange(len(adj[v])):
+                        e = adj[v][i]
+                        if not lvl[e.to] and (e.c - e.f) >> (LIMIT - L):
+                            q[qe] = e.to
                             qe += 1
-                            self.lvl[e.to] = self.lvl[v] + 1
-                p = self.dfs(s, t, INF)
+                            lvl[e.to] = lvl[v] + 1
+                p = dfs(adj, lvl, ptr, s, t, INF)
                 while p:
                     flow += p
-                    p = self.dfs(s, t, INF)
-                if not self.lvl[t]:
+                    p = dfs(adj, lvl, ptr, s, t, INF)
+                if not lvl[t]:
                     break
         return flow
 
@@ -71,12 +72,12 @@ def ladders_and_snakes():
     for i in xrange(N):
         X[i], A[i], B[i] = map(int, raw_input().strip().split())
 
-    dinic = Dinic(N+2)
+    dinic = Dinic(N+2, INF)
     for i in xrange(N):
         if A[i] == 0:
             dinic.addEdge(N, i, MAX_COST)
         if B[i] == H:
-            dinic.addEdge(i, N+1 , MAX_COST)
+            dinic.addEdge(i, N+1, MAX_COST)
         for j in xrange(N):
             if X[i] < X[j]:
                 edges = []
@@ -105,6 +106,5 @@ MAX_N = 50
 MAX_H = 10**5
 MAX_COST = 2*MAX_N*MAX_H
 INF = 2*MAX_N*MAX_COST
-LIMIT = INF.bit_length()
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, ladders_and_snakes())
