@@ -9,6 +9,9 @@
 
 from collections import deque
 
+
+# Time:  O(V^2 * E)
+# Space: O(V + E)
 class Dinic(object):
 
     def __init__(self, n):
@@ -46,7 +49,6 @@ class Dinic(object):
                         adj[to][rev][1] += t
                         return t
                 done[v] += 1
-
             return 0
 
         adj = self.adj
