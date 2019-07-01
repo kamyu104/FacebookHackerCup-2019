@@ -12,6 +12,7 @@ from collections import deque
 # Time:  O(V^2 * E)
 # Space: O(V + E)
 class Dinic(object):
+    inf = 10**9
 
     def __init__(self, n):
         self.adj = [[] for _ in xrange(n)]
@@ -72,9 +73,9 @@ def ladders_and_snakes():
     # Time: O(N^3 * logN)
     for i in xrange(N):
         if A[i] == 0:
-            dinic.addEdge(N, i, MAX_WEIGHT)
+            dinic.addEdge(N, i, Dinic.inf)
         if B[i] == H:
-            dinic.addEdge(i, N+1, MAX_WEIGHT)
+            dinic.addEdge(i, N+1, Dinic.inf)
         for j in xrange(N):
             if not (X[i] < X[j]):
                 continue
@@ -98,10 +99,7 @@ def ladders_and_snakes():
                 dinic.addEdge(j, i, length)
 
     result = dinic.calc(N, N+1)  # Time:  O(N^4)
-    return result if result < MAX_WEIGHT else -1
+    return result if result < Dinic.inf else -1
 
-MAX_N = 50
-MAX_H = 10**5
-MAX_WEIGHT = 2*MAX_N*MAX_H
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, ladders_and_snakes())
