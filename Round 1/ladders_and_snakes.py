@@ -62,6 +62,23 @@ class Dinic(object):
                 f += t
         return f
 
+def line_sweep(segments, i, j):
+    points = []
+    for k in xrange(i, j+1):
+        points.append((segments[k][1], 1, k))
+        points.append((segments[k][2], 0, k))
+    points.sort()
+    lookup = set()
+    length = 0
+    for k in xrange(len(points)):
+        if points[k][1]:  # start
+            lookup.add(points[k][2])
+        else:  # end
+            lookup.remove(points[k][2])
+        if len(lookup) == 2 and i in lookup and j in lookup:
+            length += points[k+1][0]-points[k][0]
+    return length
+
 def ladders_and_snakes():
     N, H = map(int, raw_input().strip().split())
     segments = []
@@ -78,25 +95,12 @@ def ladders_and_snakes():
         if segments[i][2] == H:
             dinic.addEdge(i, N+1, Dinic.max_weight)
         for j in xrange(i+1, N):
-            points = []
-            for k in xrange(i, j+1):
-                points.append((segments[k][1], 1, k))
-                points.append((segments[k][2], 0, k))
-            points.sort()
-            lookup = set()
-            length = 0
-            for k in xrange(len(points)):
-                if points[k][1]:  # start
-                    lookup.add(points[k][2])
-                else:  # end
-                    lookup.remove(points[k][2])
-                if len(lookup) == 2 and i in lookup and j in lookup:
-                    length += points[k+1][0]-points[k][0]
+            length = line_sweep(segments, i, j)  # Time: O(NlogN)
             if length:
                 dinic.addEdge(i, j, length)
                 dinic.addEdge(j, i, length)
 
-    result = dinic.calc(N, N+1)  # Time:  O(N^4)
+    result = dinic.calc(N, N+1)  # Time: O(N^4)
     return result if result < Dinic.max_weight else -1
 
 for case in xrange(input()):
