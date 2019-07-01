@@ -64,8 +64,8 @@ class Dinic(object):
 def line_sweep(segments, i, j):
     points = []
     for k in xrange(i, j+1):
-        points.append((segments[k][1], 1, k))
-        points.append((segments[k][2], 0, k))
+        points.append((segments[k][1], True, k))
+        points.append((segments[k][2], False, k))
     points.sort()
     lookup = set()
     length = 0
