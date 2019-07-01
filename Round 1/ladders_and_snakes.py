@@ -75,9 +75,9 @@ def ladders_and_snakes():
     dinic = Dinic(N+2, INF)
     for i in xrange(N):
         if A[i] == 0:
-            dinic.addEdge(N, i, MAX_COST)
+            dinic.addEdge(N, i, MAX_WEIGHT)
         if B[i] == H:
-            dinic.addEdge(i, N+1, MAX_COST)
+            dinic.addEdge(i, N+1, MAX_WEIGHT)
         for j in xrange(N):
             if X[i] < X[j]:
                 edges = []
@@ -85,9 +85,9 @@ def ladders_and_snakes():
                     if X[i] <= X[k] <= X[j]:
                         edges.append((A[k], 1, k))
                         edges.append((B[k], 0, k))
-                length = 0
-                lookup = set()
                 edges.sort()
+                lookup = set()
+                length = 0
                 for k in xrange(len(edges)):
                     if edges[k][1]:  # start
                         lookup.add(edges[k][2])
@@ -100,11 +100,11 @@ def ladders_and_snakes():
                     dinic.addEdge(j, i, length)
 
     result = dinic.calc(N, N+1)
-    return result if result < MAX_COST else -1
+    return result if result < MAX_WEIGHT else -1
 
 MAX_N = 50
 MAX_H = 10**5
-MAX_COST = 2*MAX_N*MAX_H
-INF = 2*MAX_N*MAX_COST
+MAX_WEIGHT = 2*MAX_N*MAX_H
+INF = 2*MAX_N*MAX_WEIGHT
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, ladders_and_snakes())
