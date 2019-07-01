@@ -60,7 +60,7 @@ def trees_as_a_service_helper(LCAs, parent, tree, result):  # at most visit N ti
         result[root] = parent
         for subtree in subtrees:
             if not trees_as_a_service_helper(LCAs, root, subtree, result):
-                return False  # make service_trees_helper called at most N times
+                return False  # make trees_as_a_service_helper called at most N times
         return True
     return False
 
