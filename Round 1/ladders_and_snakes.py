@@ -20,7 +20,7 @@ class Dinic(object):
         self.adj[i].append([j, c, len(self.adj[j])])
         self.adj[j].append([i, 0, len(self.adj[i]) - 1])
 
-    def calc(self, S, T):
+    def max_flow(self, S, T):
         def levelize(V, S, T, adj, lev):
             for i in xrange(V):
                 lev[i] = -1
@@ -99,7 +99,7 @@ def ladders_and_snakes():
                 dinic.addEdge(i, j, length)
                 dinic.addEdge(j, i, length)
 
-    result = dinic.calc(N, N+1)  # Time: O(N^4)
+    result = dinic.max_flow(N, N+1)  # Time: O(N^4)
     return result if result < INF else -1
 
 INF = 10**9  # a magic max weight
