@@ -21,8 +21,8 @@ class Dinic(object):
         self.adj[j].append([i, 0, len(self.adj[i]) - 1])
 
     def max_flow(self, S, T):
-        def levelize(V, S, T, adj, lev):
-            for i in xrange(V):
+        def bfs(S, T, adj, lev):  # levelize
+            for i in xrange(len(adj)):
                 lev[i] = -1
             lev[S] = 0
             q = deque([S])
@@ -35,13 +35,13 @@ class Dinic(object):
                         q.append(to)
             return lev[T] != -1
 
-        def augment(S, T, v, f, lev, adj, done):
+        def dfs(S, T, v, f, adj, lev, done):  # augment
             if v == T or not f:
                 return f
             while done[v] < len(adj[v]):
                 to, cap, rev = adj[v][done[v]]
                 if lev[to] > lev[v]:
-                    t = augment(S, T, to, min(f, cap), lev, adj, done)
+                    t = dfs(S, T, to, min(f, cap), adj, lev, done)
                     if t > 0:
                         adj[v][done[v]][1] -= t
                         adj[to][rev][1] += t
@@ -53,11 +53,11 @@ class Dinic(object):
         V = len(self.adj)
         f, t = 0, 0
         lev = [-1] * V
-        while levelize(V, S, T, adj, lev):
+        while bfs(S, T, adj, lev):
             done = [0] * V
             t = float("inf")
             while t:
-                t = augment(S, T, S, float("inf"), lev, adj, done)
+                t = dfs(S, T, S, float("inf"), adj, lev, done)
                 f += t
         return f
 
