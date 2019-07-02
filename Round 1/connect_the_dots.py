@@ -45,7 +45,7 @@ def connect_the_dots():
         g = max(0, min(N-H, V)-f)  # g is increasing from 0
         if len(max_heap) < g+1:  # totally at most N times
             heappush(max_heap, convert(heappop(min_heap)))
-        result = min(result, \
+        result = min(result,
                      (dots[i-1][0] if i else 0) + \
                      max(convert(max_heap[0])[0], suffix_max_Y[i]))
     return result
