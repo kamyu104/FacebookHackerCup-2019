@@ -51,7 +51,7 @@ class Dinic(object):
 
         adj = self.adj
         V = len(self.adj)
-        f, t = 0, 0
+        f = 0
         lev = [-1] * V
         while bfs(S, T, adj, lev):
             done = [0] * V
