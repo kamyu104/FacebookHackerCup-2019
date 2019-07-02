@@ -55,9 +55,10 @@ class Dinic(object):
         lev = [-1] * V
         while bfs(S, T, adj, lev):
             done = [0] * V
-            t = float("inf")
-            while t:
+            while True:
                 t = dfs(S, T, S, float("inf"), adj, lev, done)
+                if t == 0:
+                    break
                 f += t
         return f
 
