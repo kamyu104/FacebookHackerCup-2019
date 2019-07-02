@@ -43,8 +43,8 @@ class Dinic(object):
                 if lev[to] > lev[v]:
                     t = dfs(S, T, to, min(f, cap), adj, lev, done)
                     if t > 0:
-                        adj[v][done[v]][1] -= t
                         adj[to][rev][1] += t
+                        adj[v][done[v]][1] -= t
                         return t
                 done[v] += 1
             return 0
