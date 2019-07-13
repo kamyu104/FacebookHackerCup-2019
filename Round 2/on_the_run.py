@@ -9,11 +9,11 @@
             
 def on_the_run():
     N, M, K = map(int, raw_input().strip().split())
-    states = set()
+    lookup = set()
     for _ in xrange(K+1):
-        states.add(sum(map(int, raw_input().strip().split())) % 2)
+        lookup.add(sum(map(int, raw_input().strip().split())) % 2)
 
-    return "Y" if K == 2 and len(states) == 1 else "N"
+    return "Y" if K == 2 and len(lookup) == 1 else "N"
 
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, on_the_run())
