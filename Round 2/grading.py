@@ -52,8 +52,7 @@ def grading():
     for s in xrange(H+1):
         min_switch_dict[min_discard[s]] = min(min_switch_dict[min_discard[s]], s)
     # min_switch[d]: min total context switches for at most d discards
-    min_switch = list(min_switch_dict.iteritems())
-    min_switch.sort()
+    min_switch = sorted(min_switch_dict.iteritems())
     return " ".join(map(lambda d: str(min_switch[bisect_right(min_switch, (d, INF))-1][1]+1), L))  # 1-based count
 
 for case in xrange(input()):
