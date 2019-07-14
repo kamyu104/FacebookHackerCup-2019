@@ -20,11 +20,11 @@ def grading():
 
     # min_discard_with_f[f][s]: min total discards for at most s context switches assuming first graded paper type is f
     min_discard_with_f = [[0 for _ in xrange(H+1)] for _ in xrange(2)]
-    # dp[i][p][s]: min discards for at most s context switches in the first i papers in stack,
-    #              with current paper type being p
-    dp = [[[INF for _ in xrange(H+2)] for _ in xrange(2)] for _ in xrange(2)]  
     for f in xrange(2):
         for j in xrange(S):
+            # dp[i][p][s]: min discards for at most s context switches in the first i papers in stack,
+            #              with current paper type being p
+            dp = [[[INF for _ in xrange(H+2)] for _ in xrange(2)] for _ in xrange(2)]
             for p in xrange(2):
                 for s in xrange(H+2):
                     dp[0][p][s] = INF
