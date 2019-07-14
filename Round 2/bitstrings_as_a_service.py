@@ -37,7 +37,7 @@ def bitstrings_as_a_service():
             j -= 1
 
     comp = Counter(map(union_find.find_set, range(N)))
-    dp = [[-1 for _ in xrange(N+1)] for _ in xrange(len(comp)+1)]  # dp[i][j] means the back link of 
+    dp = [[-1 for _ in xrange(N+1)] for _ in xrange(len(comp)+1)]  # Space: O(N^2), dp[i][j] means the back link of 
                                                                    # the first i component with j nodes labeled 1,
                                                                    # -1 means impossible
     dp[0][0] = 0
