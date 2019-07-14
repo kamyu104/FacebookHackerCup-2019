@@ -36,12 +36,12 @@ def bitstrings_as_a_service():
             i += 1
             j -= 1
 
-    comp = Counter(map(union_find.find_set, range(N)))
-    dp = [[-1 for _ in xrange(N+1)] for _ in xrange(len(comp)+1)]  # Space: O(N^2), dp[i][j] means the back link of 
-                                                                   # the first i component with j nodes labeled 1,
-                                                                   # -1 means impossible
+    comps = Counter(map(union_find.find_set, range(N)))
+    dp = [[-1 for _ in xrange(N+1)] for _ in xrange(len(comps)+1)]  # Space: O(N^2), dp[i][j] means the back link of
+                                                                    # the first i component with j nodes labeled 1,
+                                                                    # -1 means impossible
     dp[0][0] = 0
-    for i, count in enumerate(comp.itervalues()):  # Time: O(N^2)
+    for i, count in enumerate(comps.itervalues()):  # Time: O(N^2)
         for j in xrange(N):
             if dp[i][j] != -1:
                 dp[i+1][j] = j  # the first i+1 component is possible with j nodes labeled 1
@@ -51,7 +51,7 @@ def bitstrings_as_a_service():
             assert(dp[-1][N-j] != -1)
             break
     labels = {}
-    for i, set_id in enumerate(reversed(comp.keys())):  # tracing back
+    for i, set_id in enumerate(reversed(comps.keys())):  # back tracing
         labels[set_id] = 1 if dp[-1-i][j] != j else 0
         j = dp[-1-i][j]
 
