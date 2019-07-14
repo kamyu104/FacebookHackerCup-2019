@@ -28,12 +28,13 @@ def grading():
             for s in xrange(H+1):
                 dp[0][f][s] = 0
             for i in xrange(H):
+                p2 = P[i][j]
                 for p in xrange(2):
                     for s in xrange(H+2):
                        dp[(i+1)%2][p][s] = INF
                 for p in xrange(2):
                     for s in xrange(H+1):
-                        d, p2 = dp[i%2][p][s], P[i][j]
+                        d = dp[i%2][p][s]
                         dp[(i+1)%2][p2][s+int(p2 != p)] = min(dp[(i+1)%2][p2][s+int(p2 != p)], d)
                         dp[(i+1)%2][p][s] = min(dp[(i+1)%2][p][s], d+1)
             for s in xrange(H+1):
