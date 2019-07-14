@@ -51,7 +51,7 @@ def bitstrings_as_a_service():
             assert(dp[-1][N-j] != -1)
             break
     labels = {}
-    for i, set_id in enumerate(reversed(comp.keys())):  # back tracing
+    for i, set_id in enumerate(reversed(comp.keys())):  # tracing back
         labels[set_id] = 1 if dp[-1-i][j] != j else 0
         j = dp[-1-i][j]
 
