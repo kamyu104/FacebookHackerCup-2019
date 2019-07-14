@@ -16,7 +16,7 @@ def grading():
     for _ in xrange(H):
         P.append(map(lambda x: ord(x)-ord('A'), raw_input().strip()))
     L = map(int, raw_input().strip().split())
-    INF = S*H-1
+    INF = S*H
 
     # min_discard_with_f[f][s]: min total discards for at most s context switches assuming first graded paper type is f
     min_discard_with_f = [[0 for _ in xrange(H+1)] for _ in xrange(2)]
