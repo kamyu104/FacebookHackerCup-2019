@@ -46,12 +46,9 @@ def bitstrings_as_a_service():
             if dp[i][j] != -1:
                 dp[i+1][j] = j  # the first i+1 component is possible with j nodes labeled 1
                 dp[i+1][j+count] = j  # the first i+1 component is also possible with (j + (i+1)_th_comp_size) nodes labeled 1
-    for i in xrange(N+1):  # find the min diff
-        j = N//2+i
+    for j in xrange((N+1)//2, N+1):  # find the min diff
         if dp[-1][j] != -1:
-            break
-        j = N//2-i
-        if dp[-1][j] != -1:
+            assert(dp[-1][N-j] != -1)
             break
     labels = {}
     for i, set_id in enumerate(reversed(comp.keys())):  # back tracing
