@@ -4,8 +4,11 @@
 # https://www.facebook.com/hackercup/problem/432000547357525/
 #
 # Time:  O(S * H^2)
-# Space: O(S * H)
+# Space: O(H)
 #
+
+from collections import defaultdict
+from bisect import bisect_right
            
 def grading():
     H, S, K = map(int, raw_input().strip().split())
@@ -45,12 +48,12 @@ def grading():
     for s in xrange(H+1):
         min_discard[s] = min(min_discard_with_f[0][s], min_discard_with_f[1][s])
     # min_switch[d]: min total context switches for at most d discards
-    min_switch = [INF for _ in xrange(S*H+1)]
+    min_switch_dict = defaultdict(lambda: INF)
     for s in xrange(H+1):
-        min_switch[min_discard[s]] = min(min_switch[min_discard[s]], s)
-    for d in xrange(S*H):  # make every discard with correct min switches
-        min_switch[d+1] = min(min_switch[d+1], min_switch[d])
-    return " ".join(map(lambda d: str(min_switch[d]+1), L))  # 1-based count
+        min_switch_dict[min_discard[s]] = min(min_switch_dict[min_discard[s]], s)
+    min_switch = list(min_switch_dict.iteritems())
+    min_switch.sort()
+    return " ".join(map(lambda d: str(min_switch[bisect_right(min_switch, (d, INF))-1][1]+1), L))  # 1-based count
 
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, grading())
