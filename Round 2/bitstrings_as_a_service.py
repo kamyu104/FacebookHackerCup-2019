@@ -3,11 +3,11 @@
 # Facebook Hacker Cup 2019 Round 2 - Bitstrings as a Service
 # https://www.facebook.com/hackercup/problem/432000547357525/
 #
-# Time:  O(N * M)
+# Time:  O(N * (M + N))
 # Space: O(N * M)
 #
 
-from collections import defaultdict
+from collections import Counter
 
 class UnionFind(object):
     def __init__(self, n):
@@ -35,33 +35,30 @@ def bitstrings_as_a_service():
             union_find.union_set(i, j)
             i += 1
             j -= 1
-    comp_size = defaultdict(int)
-    for i in xrange(N):
-        comp_size[union_find.find_set(i)] += 1
-    comp = list(comp_size)
-    K = len(comp)
-    set_to_comp_idx = {comp[i]:i for i in xrange(len(comp))}
-    dp = [[-1 for _ in xrange(N+1)] for _ in xrange(K+1)]
+
+    comp = Counter(map(union_find.find_set, range(N)))
+    dp = [[-1 for _ in xrange(N+1)] for _ in xrange(len(comp)+1)]
     dp[0][0] = 0
-    for i in xrange(K):
+    for i, count in enumerate(comp.itervalues()):
         for j in xrange(N):
             if dp[i][j] != -1:
                 dp[i+1][j] = j
-                dp[i+1][j+comp_size[comp[i]]] = j
-    for i in xrange(N+1):
+                dp[i+1][j+count] = j
+    for i in xrange(N+1):  # find the min diff
         j = N//2+i
-        if dp[K][j] != -1:
+        if dp[-1][j] != -1:
             break
         j = N//2-i
-        if dp[K][j] != -1:
+        if dp[-1][j] != -1:
             break
-    comp_labels = [0]*N
-    for i in reversed(xrange(1, K+1)):
-        comp_labels[i-1] = 1 if dp[i][j] != j else 0
-        j = dp[i][j]
+    labels = {}
+    for i, set_id in enumerate(reversed(comp.keys())):  # back tracing
+        labels[set_id] = 1 if dp[-1-i][j] != j else 0
+        j = dp[-1-i][j]
+
     result = []
     for i in xrange(N):
-        result.append(comp_labels[set_to_comp_idx[union_find.find_set(i)]])
+        result.append(labels[union_find.find_set(i)])
     return "".join(map(str, result))
 
 for case in xrange(input()):
