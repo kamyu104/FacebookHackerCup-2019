@@ -17,27 +17,27 @@ def grading():
 
     # min_discard[f][s]: min total discards for at most s context switches assuming first paper type is f
     min_discard = [[0 for _ in xrange(H+1)] for _ in xrange(2)]
-    # dp[i][s][p]: min discards for at most s context switches in the first i papers in stack,
+    # dp[i][p][s]: min discards for at most s context switches in the first i papers in stack,
     #              with current paper type being p
-    dp = [[[INF for _ in xrange(2)] for _ in xrange(H+2)] for _ in xrange(2)]  
+    dp = [[[INF for _ in xrange(H+2)] for _ in xrange(2)] for _ in xrange(2)]  
     for f in xrange(2):
         for j in xrange(S):
-            for s in xrange(H+2):
-                for p in xrange(2):
-                    dp[0][s][p] = INF
-            for s in xrange(H+1):
-                dp[0][s][f] = 0
-            for i in xrange(H):
+            for p in xrange(2):
                 for s in xrange(H+2):
-                    for p in xrange(2):
-                       dp[(i+1)%2][s][p] = INF
-                for s in xrange(H+1):
-                    for p in xrange(2):
-                        d, p2 = dp[i%2][s][p], P[i][j]
-                        dp[(i+1)%2][s+int(p2 != p)][p2] = min(dp[(i+1)%2][s+int(p2 != p)][p2], d)
-                        dp[(i+1)%2][s][p] = min(dp[(i+1)%2][s][p], d+1)
+                    dp[0][p][s] = INF
             for s in xrange(H+1):
-                min_discard[f][s] += min(dp[H%2][s][0], dp[H%2][s][1])
+                dp[0][f][s] = 0
+            for i in xrange(H):
+                for p in xrange(2):
+                    for s in xrange(H+2):
+                       dp[(i+1)%2][p][s] = INF
+                for p in xrange(2):
+                    for s in xrange(H+1):
+                        d, p2 = dp[i%2][p][s], P[i][j]
+                        dp[(i+1)%2][p2][s+int(p2 != p)] = min(dp[(i+1)%2][p2][s+int(p2 != p)], d)
+                        dp[(i+1)%2][p][s] = min(dp[(i+1)%2][p][s], d+1)
+            for s in xrange(H+1):
+                min_discard[f][s] += min(dp[H%2][0][s], dp[H%2][1][s])
     
     # min_switch[d]: min total context switches for at most d discards
     min_switch = [INF for _ in xrange(S*H+1)]
