@@ -1,7 +1,7 @@
 # Copyright (c) 2019 kamyu. All rights reserved.
 #
-# Facebook Hacker Cup 2019 Round 2 - Bitstrings as a Service
-# https://www.facebook.com/hackercup/problem/432000547357525/
+# Facebook Hacker Cup 2019 Round 2 - Grading
+# https://www.facebook.com/hackercup/problem/421194065345355/
 #
 # Time:  O(S * H^2)
 # Space: O(H)
