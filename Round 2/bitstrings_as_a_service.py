@@ -1,0 +1,68 @@
+# Copyright (c) 2019 kamyu. All rights reserved.
+#
+# Facebook Hacker Cup 2019 Round 2 - Bitstrings as a Service
+# https://www.facebook.com/hackercup/problem/432000547357525/
+#
+# Time:  O(N * M)
+# Space: O(N * M)
+#
+
+from collections import defaultdict
+
+class UnionFind(object):
+    def __init__(self, n):
+        self.set = range(n)
+
+    def find_set(self, x):
+        if self.set[x] != x:
+            self.set[x] = self.find_set(self.set[x])  # path compression.
+        return self.set[x]
+
+    def union_set(self, x, y):
+        x_root, y_root = map(self.find_set, (x, y))
+        if x_root == y_root:
+            return False
+        self.set[min(x_root, y_root)] = max(x_root, y_root)
+        return True
+            
+def bitstrings_as_a_service():
+    N, M = map(int, raw_input().strip().split())
+    union_find = UnionFind(N)
+    for _ in xrange(M):
+        i, j = map(int, raw_input().strip().split())
+        i, j = i-1, j-1
+        while i <= j:
+            union_find.union_set(i, j)
+            i += 1
+            j -= 1
+    comp_size = defaultdict(int)
+    for i in xrange(N):
+        comp_size[union_find.find_set(i)] += 1
+    comp = list(comp_size)
+    K = len(comp)
+    set_to_comp_idx = {comp[i]:i for i in xrange(len(comp))}
+    dp = [[-1 for _ in xrange(N+1)] for _ in xrange(K+1)]
+    dp[0][0] = 0
+    for i in xrange(K):
+        for j in xrange(N):
+            if dp[i][j] != -1:
+                dp[i+1][j] = j
+                dp[i+1][j+comp_size[comp[i]]] = j
+    for i in xrange(N+1):
+        j = N//2+i
+        if dp[K][j] != -1:
+            break
+        j = N//2-i
+        if dp[K][j] != -1:
+            break
+    comp_labels = [0]*N
+    for i in reversed(xrange(1, K+1)):
+        comp_labels[i-1] = 1 if dp[i][j] != j else 0
+        j = dp[i][j]
+    result = []
+    for i in xrange(N):
+        result.append(comp_labels[set_to_comp_idx[union_find.find_set(i)]])
+    return "".join(map(str, result))
+
+for case in xrange(input()):
+    print 'Case #%d: %s' % (case+1, bitstrings_as_a_service())
