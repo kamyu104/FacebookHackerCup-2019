@@ -3,8 +3,8 @@
 # Facebook Hacker Cup 2019 Round 2 - Bitstrings as a Service
 # https://www.facebook.com/hackercup/problem/432000547357525/
 #
-# Time:  O(N * (M + N))
-# Space: O(N * M)
+# Time:  O((M + N) * N)
+# Space: O(N^2)
 #
 
 from collections import Counter
@@ -28,10 +28,10 @@ class UnionFind(object):
 def bitstrings_as_a_service():
     N, M = map(int, raw_input().strip().split())
     union_find = UnionFind(N)
-    for _ in xrange(M):
+    for _ in xrange(M):  # Time: O(M * N)
         i, j = map(int, raw_input().strip().split())
         i, j = i-1, j-1
-        while i <= j:
+        while i <= j:  # at most O(N) times
             union_find.union_set(i, j)
             i += 1
             j -= 1
@@ -41,7 +41,7 @@ def bitstrings_as_a_service():
                                                                    # the first i component with j nodes labeled 1,
                                                                    # -1 means impossible
     dp[0][0] = 0
-    for i, count in enumerate(comp.itervalues()):
+    for i, count in enumerate(comp.itervalues()):  # Time: O(N^2)
         for j in xrange(N):
             if dp[i][j] != -1:
                 dp[i+1][j] = j  # the first i+1 component is possible with j nodes labeled 1
