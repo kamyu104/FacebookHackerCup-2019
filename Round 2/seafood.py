@@ -28,7 +28,8 @@ def seafood():
         if (P[i][1] == 'R') and \
            (not ascending_R_H_from_right or (ascending_R_H_from_right[-1][0] < P[i][2])):
             ascending_R_H_from_right.append((P[i][2], P[i][0]))
-    rightmost_harder_R = [-1]*len(C)  # rightmost_harder_R[i] = j: rightmost rock j s.t. ascending_R_H_from_right[j] > P[C[i]][2]
+    rightmost_harder_R = [-1]*len(C)  # rightmost_harder_R[i] = j:
+                                      # rightmost rock j s.t. ascending_R_H_from_right[j] > P[C[i]][2]
     for i in xrange(len(C)):
         j = bisect_right(ascending_R_H_from_right, (P[C[i]][2], float("inf")))
         if j == len(ascending_R_H_from_right):
