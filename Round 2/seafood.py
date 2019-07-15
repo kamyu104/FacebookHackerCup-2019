@@ -57,7 +57,7 @@ def seafood():
             while len(stk) > 1:
                 a = stk[-1][1]
                 b = min(a, stk[-2][1])
-                if stk[-1][0] + 2*max(0, p-a) < stk[-2][0] + 2*max(0, p-b):
+                if stk[-2][0] + 2*max(0, p-b) > stk[-1][0] + 2*max(0, p-a):
                     break
                 stk[-2][1] = b
                 stk.pop()
