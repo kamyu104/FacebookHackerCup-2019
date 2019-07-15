@@ -49,26 +49,29 @@ def seafood():
             ascending_R_H_after_rightmost_C.append((P[i][2], P[i][0]))
 
     result = float("inf")
-    stk = []
+    descending_stk = []
     for i in xrange(len(C)):
         if not i:
             d = 0
         else:
             prev_p = P[C[i-1]][0]
-            while len(stk) > 1:
-                a = stk[-1][1]
-                b = min(a, stk[-2][1])
-                if stk[-2][0] + 2*max(0, prev_p-b) > stk[-1][0] + 2*max(0, prev_p-a):
+            while len(descending_stk) > 1:  # keep potential idx
+                a = descending_stk[-1][1]
+                b = min(a, descending_stk[-2][1])
+                if descending_stk[-2][0] + 2*max(0, prev_p-b) > \
+                   descending_stk[-1][0] + 2*max(0, prev_p-a):
                     break
-                stk[-2][1] = b
-                stk.pop()
-            d = stk[-1][0] + 2*max(0, prev_p-stk[-1][1])
-        stk.append([d, rightmost_harder_R[i]])
+                descending_stk[-2][1] = b  # update optimal idx with new pos
+                descending_stk.pop()
+            d = descending_stk[-1][0] + 2*max(0, prev_p-descending_stk[-1][1])
+        descending_stk.append([d, rightmost_harder_R[i]])
         rightmost_p = P[C[-1]][0]
         if suffix_min_R[i] >= 0:
+            # from last clam position to the nearest left rock harder than i..len(C)-1 clams
            result = min(result, d+max(0, rightmost_p-suffix_min_R[i]))
         j = bisect_right(ascending_R_H_after_rightmost_C, (suffix_max_H[i], float("inf")))
         if j != len(ascending_R_H_after_rightmost_C):
+            # from last clam position to the nearest right harder rock
             result = min(result, d+(ascending_R_H_after_rightmost_C[j][1]-rightmost_p))
         if rightmost_harder_R[i] == -1:  # no harder rocker or the last clam
             break
