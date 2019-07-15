@@ -56,7 +56,7 @@ def seafood():
         else:
             p = P[C[i-1]][0]
             while len(descending_stk) > 1:  # keep potential idxs
-                # earlier idx can eventually become more optimal than later ones
+                # earlier idxs can eventually become more optimal than later ones
                 a = descending_stk[-1][1]
                 b = min(a, descending_stk[-2][1])
                 if descending_stk[-2][0] + 2*max(0, p-b) > \
