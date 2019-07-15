@@ -4,6 +4,7 @@ Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it 
 
 * [Qualification Round](https://github.com/kamyu104/FacebookHackerCup-2019#qualification-round)
 * [Round 1](https://github.com/kamyu104/FacebookHackerCup-2019#round-1)
+* [Round 2](https://github.com/kamyu104/FacebookHackerCup-2019#round-2)
 
 ## Qualification Round
 | # | Title | Solution | Time | Space | Difficulty | Tag | Note |
