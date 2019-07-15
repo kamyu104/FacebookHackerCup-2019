@@ -18,8 +18,8 @@ def seafood():
             G[i][j] = (A*G[i][j-2] + rightmost_harder_R*G[i][j-1] + C) % D + 1
     O = raw_input().strip()
 
-    P = sorted((G[0][i], O[i], G[1][i]) for i in xrange(N))  # ordered position
-    C = []  # idx of ordered position with clam 
+    P = sorted((G[0][i], O[i], G[1][i]) for i in xrange(N))  # ordered positions
+    C = []  # idx of ordered positions with clam
     for i in xrange(N):
         if P[i][1] == 'C':
             C.append(i)
@@ -62,7 +62,7 @@ def seafood():
                 if descending_stk[-2][0] + 2*max(0, p-b) > \
                    descending_stk[-1][0] + 2*max(0, p-a):
                     break
-                descending_stk[-2][1] = b  # update optimal idx with new pos
+                descending_stk[-2][1] = b  # update optimal idx with new rock pos harder than both clams
                 descending_stk.pop()  # pop the topmost because it’s no longer more optimal
             d = descending_stk[-1][0] + 2*max(0, p-descending_stk[-1][1])
         descending_stk.append([d, rightmost_harder_R[i]])
