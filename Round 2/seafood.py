@@ -54,16 +54,17 @@ def seafood():
         if not i:
             d = 0
         else:
-            prev_p = P[C[i-1]][0]
+            p = P[C[i-1]][0]
             while len(descending_stk) > 1:  # keep potential idxs
+                # earlier idx can eventually become more optimal than later ones
                 a = descending_stk[-1][1]
                 b = min(a, descending_stk[-2][1])
-                if descending_stk[-2][0] + 2*max(0, prev_p-b) > \
-                   descending_stk[-1][0] + 2*max(0, prev_p-a):
+                if descending_stk[-2][0] + 2*max(0, p-b) > \
+                   descending_stk[-1][0] + 2*max(0, p-a):
                     break
                 descending_stk[-2][1] = b  # update optimal idx with new pos
-                descending_stk.pop()
-            d = descending_stk[-1][0] + 2*max(0, prev_p-descending_stk[-1][1])
+                descending_stk.pop()  # pop the topmost because it’s no longer more optimal
+            d = descending_stk[-1][0] + 2*max(0, p-descending_stk[-1][1])
         descending_stk.append([d, rightmost_harder_R[i]])
         rightmost_p = P[C[-1]][0]
         if suffix_min_R[i] >= 0:
