@@ -18,8 +18,8 @@ def seafood():
             G[i][j] = (A*G[i][j-2] + rightmost_harder_R*G[i][j-1] + C) % D + 1
     O = raw_input().strip()
 
-    P = sorted((G[0][i], O[i], G[1][i]) for i in xrange(N))
-    C = []
+    P = sorted((G[0][i], O[i], G[1][i]) for i in xrange(N))  # ordered position
+    C = []  # idx of ordered position with clam 
     for i in xrange(N):
         if P[i][1] == 'C':
             C.append(i)
