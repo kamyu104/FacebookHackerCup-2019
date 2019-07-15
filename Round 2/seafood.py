@@ -36,10 +36,10 @@ def seafood():
             break
         rightmost_harder_R[i] = ascending_R_H_from_right[j][1]
 
-    suffix_min_B = [float("inf")]*(len(C)+1)
+    suffix_min_R = [float("inf")]*(len(C)+1)
     suffix_max_H = [float("-inf")]*(len(C)+1)
     for i in reversed(xrange(len(C))):
-        suffix_min_B[i] = min(suffix_min_B[i+1], rightmost_harder_R[i])
+        suffix_min_R[i] = min(suffix_min_R[i+1], rightmost_harder_R[i])
         suffix_max_H[i] = max(suffix_max_H[i+1], P[C[i]][2])
     ascending_R_H_after_rightmost_C = []
     for i in xrange(C[-1]+1, N):
@@ -64,8 +64,8 @@ def seafood():
             d = stk[-1][0] + 2*max(0, p-stk[-1][1])
         stk.append([d, rightmost_harder_R[i]])
         p = P[C[-1]][0]
-        if suffix_min_B[i] >= 0:
-           result = min(result, d+max(0, p-suffix_min_B[i]))
+        if suffix_min_R[i] >= 0:
+           result = min(result, d+max(0, p-suffix_min_R[i]))
         j = bisect_right(ascending_R_H_after_rightmost_C, (suffix_max_H[i], float("inf")))
         if j != len(ascending_R_H_after_rightmost_C):
             result = min(result, d+(ascending_R_H_after_rightmost_C[j][1]-p))
