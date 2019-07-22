@@ -25,7 +25,7 @@ Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it 
 ## Round 2
 | # | Title | Solution | Time | Space | Difficulty | Tag | Note |
 |---| ----- | -------- | ---- | ----- | ---------- | --- | ---- |
-|1| [On the Run](https://www.facebook.com/hackercup/problem/432000547357525/)| [Python](./Round%202/on_the_run.py)| _O(N^3)_ | _O(N^2)_ | Easy | | Math |
+|1| [On the Run](https://www.facebook.com/hackercup/problem/432000547357525/)| [Python](./Round%202/on_the_run.py)| _O(1)_ | _O(1)_ | Easy | | Math |
 |2| [Bitstrings as a Service](https://www.facebook.com/hackercup/problem/294773441466017/)| [Python](./Round%202/bitstrings_as_a_service.py)| _O((M + N) * N)_ | _O(N^2)_ | Medium | | Union Find, DP |
 |3| [Grading](https://www.facebook.com/hackercup/problem/421194065345355/)| [PyPy](./Round%202/grading.py) | _O(S * H^2)_ | _O(H)_ | Hard | | DP, Binary Search |
 |4| [Seafood](https://www.facebook.com/hackercup/problem/404425766835121/)| [Python](./Round%202/seafood.py)| _O(NlogN)_ | _O(N)_ | Hard | | Mono Stack, Binary Search, DP |
