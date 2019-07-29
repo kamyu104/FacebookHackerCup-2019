@@ -38,13 +38,14 @@ def renovations():
         if i == 0:
             continue
         count = N-1
-        EXP_D = pow(div(count, N-1), K, MOD)
-        while P[i]:
+        EXP_D = 0
+        while True:
+            if i == 0:
+                break
+            EXP_D = add(EXP_D, pow(div(count, N-1), K, MOD))
             lookup[i] += 1
             count -= 1
-            EXP_D = add(EXP_D, pow(div(count, N-1), K, MOD))
             i = P[i]
-        lookup[i] += 1
         result = add(result, EXP_D)
 
     count = [0]*3
