@@ -51,7 +51,7 @@ def renovations():
     for i in xrange(count[2]):
         EXP_D_L = add(EXP_D_L, pow(div(N-1-count[1]-i, N-1), K, MOD))
     result = sub(result, 2*EXP_D_L)
-    return result  # result = EXP(D(A)) + EXP(D(B)) - 2*EXP(D(L))
+    return result  # result = E(D(A)) + E(D(B)) - 2*E(D(L))
 
 MOD = 10**9+7
 for case in xrange(input()):
