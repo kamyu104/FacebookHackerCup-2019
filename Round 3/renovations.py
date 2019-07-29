@@ -35,10 +35,8 @@ def renovations():
     lookup = [0]*N
     result = 0
     for i in [A, B]:
-        if i == 0:
-            continue
-        count = N-1
         EXP_D = 0
+        count = N-1
         while i:
             EXP_D = add(EXP_D, pow(div(count, N-1), K, MOD))
             lookup[i] += 1
