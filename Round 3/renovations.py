@@ -39,9 +39,7 @@ def renovations():
             continue
         count = N-1
         EXP_D = 0
-        while True:
-            if i == 0:
-                break
+        while i:
             EXP_D = add(EXP_D, pow(div(count, N-1), K, MOD))
             lookup[i] += 1
             count -= 1
