@@ -35,11 +35,11 @@ def integers_as_a_service():
         for O, V, R in O_V_R:
             if O != 'L':
                 continue
-            curr = lcm(X, V)
-            if R % curr:
+            q, r = divmod(R, lcm(X, V))
+            if r:
                 return -1
-            if R != curr:
-                X *= R // curr
+            if q != 1:
+                X *= q
                 if X > LIMIT:
                     return -1
 
