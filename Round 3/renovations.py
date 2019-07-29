@@ -4,7 +4,7 @@
 # https://www.facebook.com/hackercup/problem/2038302866474992/
 #
 # Time:  O(NlogK)
-# Space: O(1)
+# Space: O(N)
 #
 
 def add(a, b):
