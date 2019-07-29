@@ -36,20 +36,20 @@ def renovations():
     result = 0
     for i in [A, B]:
         EXP_D = 0
-        count = N-1
+        c = 0
         while i:
-            EXP_D = add(EXP_D, pow(div(count, N-1), K, MOD))
+            EXP_D = add(EXP_D, pow(div(N-1-c, N-1), K, MOD))
             lookup[i] += 1
-            count -= 1
             i = P[i]
+            c += 1
         result = add(result, EXP_D)
 
     count = [0]*3
     for i in xrange(N):
         count[lookup[i]] += 1
     EXP_D_L = 0
-    for i in xrange(count[2]):
-        EXP_D_L = add(EXP_D_L, pow(div(N-1-count[1]-i, N-1), K, MOD))
+    for c in xrange(count[2]):
+        EXP_D_L = add(EXP_D_L, pow(div(N-1-count[1]-c, N-1), K, MOD))
     result = sub(result, 2*EXP_D_L)
     return result  # result = E(D(A)) + E(D(B)) - 2*E(D(L))
 
