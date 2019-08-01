@@ -148,8 +148,7 @@ def chain_of_command():
     hld = HLD(root, adj)
     bit_B, bit_X = BIT(N+1), BIT(N+1)
     lookup_X, lookup_upward = set(), set()
-    result = 1
-    curr = 0
+    result, curr = 1, 0
     for i in xrange(N):
         curr = add(curr, bribe(C, i, adj, hld, bit_B, bit_X, lookup_X, lookup_upward))
         result = mul(result, curr)
