@@ -3,7 +3,7 @@
 # Facebook Hacker Cup 2019 Round 3 - Chain of Command
 # https://www.facebook.com/hackercup/problem/427797291330788/
 #
-# Time:  O(N*(logN)^2)
+# Time:  O(N * (logN)^2)
 # Space: O(N)
 #
 
