@@ -18,8 +18,8 @@ def mul(a, b):
 class HLD(object):  # Heavy-Light Decomposition
     def __init__(self, root, adj):
         self.__idx = [0]
-        self.__adj = [list(c) for c in adj]  # Space: O(N)
-        self.__parent = [-1]*len(adj)
+        self.__children = adj
+        self.__parent = [-1]*len(adj)  # Space: O(N)
         self.__size = [-1]*len(adj)
         self.__left = [-1]*len(adj)
         self.__right = [-1]*len(adj)
@@ -33,32 +33,32 @@ class HLD(object):  # Heavy-Light Decomposition
         self.__decompose(root)
 
     def __find_heavy_light(self, i):  # Time: O(N)
-        def divide(stk, adj, size, i):
-            for j in reversed(xrange(len(adj[i]))):
-                c = adj[i][j]
-                stk.append(partial(postprocess, adj, size, i, j, c))
-                stk.append(partial(divide, stk, adj, size, c))
+        def divide(stk, children, size, i):
+            for j in reversed(xrange(len(children[i]))):
+                c = children[i][j]
+                stk.append(partial(postprocess, children, size, i, j, c))
+                stk.append(partial(divide, stk, children, size, c))
             stk.append(partial(init, size, i))
 
         def init(size, i):
             size[i] = 1
 
-        def postprocess(adj, size, i, j, c):
+        def postprocess(children, size, i, j, c):
             size[i] += size[c]
-            if size[c] > size[adj[i][0]]:
-                adj[i][0], adj[i][j] = adj[i][j], adj[i][0]  # put heavy idx in adj[i][0]
+            if size[c] > size[children[i][0]]:
+                children[i][0], children[i][j] = children[i][j], children[i][0]  # put heavy idx in children[i][0]
 
         stk = []
-        stk.append(partial(divide, stk, self.__adj, self.__size, i))
+        stk.append(partial(divide, stk, self.__children, self.__size, i))
         while stk:
             stk.pop()()
 
     def __decompose(self, i):  # Time: O(N)
-        def divide(stk, adj, idx, nxt, left, right, i):
+        def divide(stk, children, idx, nxt, left, right, i):
             stk.append(partial(conquer, idx, right, i))
-            for j in reversed(xrange(len(adj[i]))):
-                c = adj[i][j]
-                stk.append(partial(divide, stk, adj, idx, nxt, left, right, c))
+            for j in reversed(xrange(len(children[i]))):
+                c = children[i][j]
+                stk.append(partial(divide, stk, children, idx, nxt, left, right, c))
                 stk.append(partial(preprocess, nxt, i, j, c))
             stk.append(partial(init, idx, left, i))
 
@@ -73,12 +73,12 @@ class HLD(object):  # Heavy-Light Decomposition
             right[i] = idx[0]
 
         stk = []
-        stk.append(partial(divide, stk, self.__adj, self.__idx, self.__nxt, self.__left, self.__right, i))
+        stk.append(partial(divide, stk, self.__children, self.__idx, self.__nxt, self.__left, self.__right, i))
         while stk:
             stk.pop()()
     
-    def adj(self, i):
-        return self.__adj[i]
+    def children(self, i):
+        return self.__children[i]
 
     def parent(self, i):
         return self.__parent[i]
@@ -130,17 +130,17 @@ def bribe(i, hld, bit_B, bit_X, lookup_X, lookup_upward):
     result = 0
     bit_B.add(hld.left(i)+1, 1)  # set B to i
     result = add(result, query_X_to_root(i, hld, bit_X))  # Time: O((logN)^2)
-    for j in xrange(len(hld.adj(i))):  # set X to children of i
-        result = add(result, set_X(hld.adj(i)[j], hld, bit_B, bit_X, lookup_X))
+    for j in xrange(len(hld.children(i))):  # set X to children of i
+        result = add(result, set_X(hld.children(i)[j], hld, bit_B, bit_X, lookup_X))
     while i not in lookup_upward:  # set X to siblings of i and upwards
         lookup_upward.add(i)  # avoid duplicated upward
-        c = hld.parent(i)
-        if c < 0:
+        p = hld.parent(i)
+        if p < 0:
             break
-        for j in xrange(len(hld.adj(c))):
-            if hld.adj(c)[j] != i:
-                result = add(result, set_X(hld.adj(c)[j], hld, bit_B, bit_X, lookup_X))
-        i = c
+        for j in xrange(len(hld.children(p))):
+            if hld.children(p)[j] != i:
+                result = add(result, set_X(hld.children(p)[j], hld, bit_B, bit_X, lookup_X))
+        i = p
     return result
 
 def chain_of_command():

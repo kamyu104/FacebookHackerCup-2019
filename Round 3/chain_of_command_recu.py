@@ -18,8 +18,8 @@ def mul(a, b):
 class HLD(object):  # Heavy-Light Decomposition
     def __init__(self, root, adj):
         self.__idx = 0
-        self.__adj = [list(c) for c in adj]  # Space: O(N)
-        self.__parent = [-1]*len(adj)
+        self.__children = adj
+        self.__parent = [-1]*len(adj)  # Space: O(N)
         self.__size = [-1]*len(adj)
         self.__left = [-1]*len(adj)
         self.__right = [-1]*len(adj)
@@ -34,24 +34,24 @@ class HLD(object):  # Heavy-Light Decomposition
 
     def __find_heavy_light(self, i):  # Time: O(N)
         self.__size[i] = 1
-        for j in xrange(len(self.__adj[i])):
-            c = self.__adj[i][j]
+        for j in xrange(len(self.__children[i])):
+            c = self.__children[i][j]
             self.__find_heavy_light(c)
             self.__size[i] += self.__size[c]
-            if self.__size[c] > self.__size[self.__adj[i][0]]:
-                self.__adj[i][0], self.__adj[i][j] = self.__adj[i][j], self.__adj[i][0]  # put heavy idx in adj[i][0]
+            if self.__size[c] > self.__size[self.__children[i][0]]:
+                self.__children[i][0], self.__children[i][j] = self.__children[i][j], self.__children[i][0]  # put heavy idx in children[i][0]
 
     def __decompose(self, i):  # Time: O(N)
         self.__left[i] = self.__idx
         self.__idx += 1
-        for j in xrange(len(self.__adj[i])):
-            c = self.__adj[i][j]
+        for j in xrange(len(self.__children[i])):
+            c = self.__children[i][j]
             self.__nxt[c] = c if j > 0 else self.__nxt[i]  # new chain if not heavy
             self.__decompose(c)
         self.__right[i] = self.__idx
 
-    def adj(self, i):
-        return self.__adj[i]
+    def children(self, i):
+        return self.__children[i]
 
     def parent(self, i):
         return self.__parent[i]
@@ -103,17 +103,17 @@ def bribe(i, hld, bit_B, bit_X, lookup_X, lookup_upward):
     result = 0
     bit_B.add(hld.left(i)+1, 1)  # set B to i
     result = add(result, query_X_to_root(i, hld, bit_X))  # Time: O((logN)^2)
-    for j in xrange(len(hld.adj(i))):  # set X to children of i
-        result = add(result, set_X(hld.adj(i)[j], hld, bit_B, bit_X, lookup_X))
+    for j in xrange(len(hld.children(i))):  # set X to children of i
+        result = add(result, set_X(hld.children(i)[j], hld, bit_B, bit_X, lookup_X))
     while i not in lookup_upward:  # set X to siblings of i and upwards
         lookup_upward.add(i)  # avoid duplicated upward
-        c = hld.parent(i)
-        if c < 0:
+        p = hld.parent(i)
+        if p < 0:
             break
-        for j in xrange(len(hld.adj(c))):
-            if hld.adj(c)[j] != i:
-                result = add(result, set_X(hld.adj(c)[j], hld, bit_B, bit_X, lookup_X))
-        i = c
+        for j in xrange(len(hld.children(p))):
+            if hld.children(p)[j] != i:
+                result = add(result, set_X(hld.children(p)[j], hld, bit_B, bit_X, lookup_X))
+        i = p
     return result
 
 def chain_of_command():
