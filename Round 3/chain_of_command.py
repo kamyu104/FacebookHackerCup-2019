@@ -120,9 +120,9 @@ def bribe(C, i, adj, hld, bit_B, bit_X, lookup_X, lookup_upward):
     result = 0
     bit_B.add(hld.left(i)+1, 1)  # set B to i
     result = add(result, query_X_to_root(C, i, hld, bit_X))
-    for j in xrange(len(adj[i])):  # set X to children
+    for j in xrange(len(adj[i])):  # set X to children of i
         result = add(result, set_X(adj[i][j], hld, bit_B, bit_X, lookup_X))
-    while i not in lookup_upward:  # set X to siblings and upward siblings
+    while i not in lookup_upward:  # set X to siblings of i and upwards
         lookup_upward.add(i)  # avoid duplicated upward
         c = C[i]
         if c < 0:
@@ -130,6 +130,7 @@ def bribe(C, i, adj, hld, bit_B, bit_X, lookup_X, lookup_upward):
         for j in xrange(len(adj[c])):
             if adj[c][j] != i:
                 result = add(result, set_X(adj[c][j], hld, bit_B, bit_X, lookup_X))
+        adj[c] = [i]  # only keep node which X is unset, (optional)
         i = c
     return result
 
