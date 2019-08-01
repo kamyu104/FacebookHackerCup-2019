@@ -19,7 +19,7 @@ class HLD(object):  # Heavy-Light Decomposition
     def __init__(self, root, adj):
         self.__idx = [0]
         self.__adj = [list(c) for c in adj]
-        self.__size = [-1]*len(adj)
+        self.__size = [-1]*len(adj)  # Space: O(N)
         self.__left = [-1]*len(adj)
         self.__right = [-1]*len(adj)
         self.__nxt = [-1]*len(adj)
@@ -28,7 +28,7 @@ class HLD(object):  # Heavy-Light Decomposition
         self.__find_heavy_light(root)
         self.__decompose(root)
 
-    def __find_heavy_light(self, i):
+    def __find_heavy_light(self, i):  # Time: O(N)
         def divide(stk, adj, size, i):
             for j in reversed(xrange(len(adj[i]))):
                 c = adj[i][j]
@@ -49,7 +49,7 @@ class HLD(object):  # Heavy-Light Decomposition
         while stk:
             stk.pop()()
 
-    def __decompose(self, i):
+    def __decompose(self, i):  # Time: O(N)
         def divide(stk, adj, idx, nxt, left, right, i):
             stk.append(partial(conquer, idx, right, i))
             for j in reversed(xrange(len(adj[i]))):
@@ -84,14 +84,14 @@ class HLD(object):  # Heavy-Light Decomposition
 
 class BIT(object):  # Fenwick Tree
     def __init__(self, n):
-        self.__bit = [0] * n
+        self.__bit = [0] * n  # Space: O(N)
 
-    def add(self, i, val):
+    def add(self, i, val):  # Time: O(logN)
         while i < len(self.__bit):
             self.__bit[i] += val
             i += (i & -i)
 
-    def query(self, i):
+    def query(self, i):  # Time: O(logN)
         ret = 0
         while i > 0:
             ret += self.__bit[i]
@@ -100,7 +100,7 @@ class BIT(object):  # Fenwick Tree
 
 def query_X_to_root(C, i, hld, bit_X):
     count = 1
-    while i >= 0:
+    while i >= 0:  # Time: O((logN)^2), O(logN) queries with O(logN) costs
         j = hld.nxt(i)
         count = add(count, bit_X.query(hld.left(i)+1)-bit_X.query(hld.left(j)))
         i = C[j]
@@ -119,7 +119,7 @@ def set_X(i, hld, bit_B, bit_X, lookup_X):
 def bribe(C, i, adj, hld, bit_B, bit_X, lookup_X, lookup_upward):
     result = 0
     bit_B.add(hld.left(i)+1, 1)  # set B to i
-    result = add(result, query_X_to_root(C, i, hld, bit_X))
+    result = add(result, query_X_to_root(C, i, hld, bit_X))  # Time: O((logN)^2)
     for j in xrange(len(adj[i])):  # set X to children of i
         result = add(result, set_X(adj[i][j], hld, bit_B, bit_X, lookup_X))
     while i not in lookup_upward:  # set X to siblings of i and upwards
