@@ -30,13 +30,16 @@ class HLD(object):  # Heavy-Light Decomposition
 
     def __find_heavy_light(self, i):
         def divide(stk, adj, size, i):
-            size[i] = 1
             for j in reversed(xrange(len(adj[i]))):
                 c = adj[i][j]
-                stk.append(partial(merge, adj, size, i, j, c))
+                stk.append(partial(postprocess, adj, size, i, j, c))
                 stk.append(partial(divide, stk, adj, size, c))
+            stk.append(partial(init, size, i))
 
-        def merge(adj, size, i, j, c):
+        def init(size, i):
+            size[i] = 1
+
+        def postprocess(adj, size, i, j, c):
             size[i] += size[c]
             if size[c] > size[adj[i][0]]:
                 adj[i][0], adj[i][j] = adj[i][j], adj[i][0]
@@ -48,15 +51,18 @@ class HLD(object):  # Heavy-Light Decomposition
 
     def __decompose(self, i):
         def divide(stk, adj, idx, nxt, left, right, i):
-            left[i] = idx[0]
-            idx[0] += 1
             stk.append(partial(conquer, idx, right, i))
             for j in reversed(xrange(len(adj[i]))):
                 c = adj[i][j]
                 stk.append(partial(divide, stk, adj, idx, nxt, left, right, c))
-                stk.append(partial(merge, nxt, i, j, c))
+                stk.append(partial(preprocess, nxt, i, j, c))
+            stk.append(partial(init, idx, left, i))
 
-        def merge(nxt, i, j, c):
+        def init(idx, left, i):
+            left[i] = idx[0]
+            idx[0] += 1
+
+        def preprocess(nxt, i, j, c):
             nxt[c] = c if j > 0 else nxt[i]  # new chain if not heavy
 
         def conquer(idx, right, i):
@@ -138,6 +144,7 @@ def chain_of_command():
             root = i
         else:
             adj[C[i]].append(i)
+
     hld = HLD(root, adj)
     bit_B, bit_X = BIT(N+1), BIT(N+1)
     lookup_X, lookup_upward = set(), set()
