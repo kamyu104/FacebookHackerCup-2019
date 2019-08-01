@@ -18,8 +18,8 @@ def mul(a, b):
 class HLD(object):  # Heavy-Light Decomposition
     def __init__(self, root, adj):
         self.__idx = [0]
-        self.__adj = [list(c) for c in adj]
-        self.__size = [-1]*len(adj)  # Space: O(N)
+        self.__adj = [list(c) for c in adj]  # Space: O(N)
+        self.__size = [-1]*len(adj)
         self.__left = [-1]*len(adj)
         self.__right = [-1]*len(adj)
         self.__nxt = [-1]*len(adj)
