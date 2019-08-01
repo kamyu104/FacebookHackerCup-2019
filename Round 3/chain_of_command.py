@@ -130,7 +130,7 @@ def bribe(C, i, adj, hld, bit_B, bit_X, lookup_X, lookup_upward):
         for j in xrange(len(adj[c])):
             if adj[c][j] != i:
                 result = add(result, set_X(adj[c][j], hld, bit_B, bit_X, lookup_X))
-        adj[c] = [i]  # only keep node which X is unset, (optional)
+        adj[c] = [i]  # only keep node which X is unset (optional)
         i = c
     return result
 
