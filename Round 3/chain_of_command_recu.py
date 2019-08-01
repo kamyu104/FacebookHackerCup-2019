@@ -23,12 +23,12 @@ class HLD(object):  # Heavy-Light Decomposition
         self.__size = [-1]*len(adj)
         self.__left = [-1]*len(adj)
         self.__right = [-1]*len(adj)
-        self.__nxt = [-1]*len(adj)
+        self.__chain = [-1]*len(adj)
 
         for parent, children in enumerate(adj):
             for c in children:
                 self.__parent[c] = parent
-        self.__nxt[root] = root
+        self.__chain[root] = root
         self.__find_heavy_light(root)
         self.__decompose(root)
 
@@ -46,7 +46,7 @@ class HLD(object):  # Heavy-Light Decomposition
         self.__idx += 1
         for j in xrange(len(self.__children[i])):
             c = self.__children[i][j]
-            self.__nxt[c] = c if j > 0 else self.__nxt[i]  # new chain if not heavy
+            self.__chain[c] = c if j > 0 else self.__chain[i]  # create a new chain if not heavy
             self.__decompose(c)
         self.__right[i] = self.__idx
 
@@ -62,8 +62,8 @@ class HLD(object):  # Heavy-Light Decomposition
     def right(self, i):
         return self.__right[i]
 
-    def nxt(self, i):
-        return self.__nxt[i]
+    def chain(self, i):
+        return self.__chain[i]
 
 class BIT(object):  # Fenwick Tree
     def __init__(self, n):
@@ -84,7 +84,7 @@ class BIT(object):  # Fenwick Tree
 def query_X_to_root(i, hld, bit_X):
     count = 1
     while i >= 0:  # Time: O((logN)^2), O(logN) queries with O(logN) costs
-        j = hld.nxt(i)
+        j = hld.chain(i)
         count = add(count, bit_X.query(hld.left(i)+1)-bit_X.query(hld.left(j)))
         i = hld.parent(j)
     return count

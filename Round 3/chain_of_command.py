@@ -23,12 +23,12 @@ class HLD(object):  # Heavy-Light Decomposition
         self.__size = [-1]*len(adj)
         self.__left = [-1]*len(adj)
         self.__right = [-1]*len(adj)
-        self.__nxt = [-1]*len(adj)
+        self.__chain = [-1]*len(adj)
 
         for parent, children in enumerate(adj):
             for c in children:
                 self.__parent[c] = parent
-        self.__nxt[root] = root
+        self.__chain[root] = root
         self.__find_heavy_light(root)
         self.__decompose(root)
 
@@ -54,26 +54,26 @@ class HLD(object):  # Heavy-Light Decomposition
             stk.pop()()
 
     def __decompose(self, i):  # Time: O(N)
-        def divide(stk, children, idx, nxt, left, right, i):
+        def divide(stk, children, idx, chain, left, right, i):
             stk.append(partial(conquer, idx, right, i))
             for j in reversed(xrange(len(children[i]))):
                 c = children[i][j]
-                stk.append(partial(divide, stk, children, idx, nxt, left, right, c))
-                stk.append(partial(preprocess, nxt, i, j, c))
+                stk.append(partial(divide, stk, children, idx, chain, left, right, c))
+                stk.append(partial(preprocess, chain, i, j, c))
             stk.append(partial(init, idx, left, i))
 
         def init(idx, left, i):
             left[i] = idx[0]
             idx[0] += 1
 
-        def preprocess(nxt, i, j, c):
-            nxt[c] = c if j > 0 else nxt[i]  # new chain if not heavy
+        def preprocess(chain, i, j, c):
+            chain[c] = c if j > 0 else chain[i]  # create a new chain if not heavy
 
         def conquer(idx, right, i):
             right[i] = idx[0]
 
         stk = []
-        stk.append(partial(divide, stk, self.__children, self.__idx, self.__nxt, self.__left, self.__right, i))
+        stk.append(partial(divide, stk, self.__children, self.__idx, self.__chain, self.__left, self.__right, i))
         while stk:
             stk.pop()()
     
@@ -89,8 +89,8 @@ class HLD(object):  # Heavy-Light Decomposition
     def right(self, i):
         return self.__right[i]
 
-    def nxt(self, i):
-        return self.__nxt[i]
+    def chain(self, i):
+        return self.__chain[i]
 
 class BIT(object):  # Fenwick Tree
     def __init__(self, n):
@@ -111,7 +111,7 @@ class BIT(object):  # Fenwick Tree
 def query_X_to_root(i, hld, bit_X):
     count = 1
     while i >= 0:  # Time: O((logN)^2), O(logN) queries with O(logN) costs
-        j = hld.nxt(i)
+        j = hld.chain(i)
         count = add(count, bit_X.query(hld.left(i)+1)-bit_X.query(hld.left(j)))
         i = hld.parent(j)
     return count
