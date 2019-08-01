@@ -19,11 +19,15 @@ class HLD(object):  # Heavy-Light Decomposition
     def __init__(self, root, adj):
         self.__idx = 0
         self.__adj = [list(c) for c in adj]  # Space: O(N)
+        self.__parent = [-1]*len(adj)
         self.__size = [-1]*len(adj)
         self.__left = [-1]*len(adj)
         self.__right = [-1]*len(adj)
         self.__nxt = [-1]*len(adj)
 
+        for parent, children in enumerate(adj):
+            for c in children:
+                self.__parent[c] = parent
         self.__nxt[root] = root
         self.__find_heavy_light(root)
         self.__decompose(root)
@@ -45,6 +49,12 @@ class HLD(object):  # Heavy-Light Decomposition
             self.__nxt[c] = c if j > 0 else self.__nxt[i]  # new chain if not heavy
             self.__decompose(c)
         self.__right[i] = self.__idx
+
+    def adj(self, i):
+        return self.__adj[i]
+
+    def parent(self, i):
+        return self.__parent[i]
 
     def left(self, i):
         return self.__left[i]
@@ -71,12 +81,12 @@ class BIT(object):  # Fenwick Tree
             i -= (i & -i)
         return ret
 
-def query_X_to_root(C, i, hld, bit_X):
+def query_X_to_root(i, hld, bit_X):
     count = 1
     while i >= 0:  # Time: O((logN)^2), O(logN) queries with O(logN) costs
         j = hld.nxt(i)
         count = add(count, bit_X.query(hld.left(i)+1)-bit_X.query(hld.left(j)))
-        i = C[j]
+        i = hld.parent(j)
     return count
 
 def query_B_in_subtree(i, hld, bit_B):
@@ -89,41 +99,39 @@ def set_X(i, hld, bit_B, bit_X, lookup_X):
     bit_X.add(hld.left(i)+1, 1)
     return query_B_in_subtree(i, hld, bit_B)
 
-def bribe(C, i, adj, hld, bit_B, bit_X, lookup_X, lookup_upward):
+def bribe(i, hld, bit_B, bit_X, lookup_X, lookup_upward):
     result = 0
     bit_B.add(hld.left(i)+1, 1)  # set B to i
-    result = add(result, query_X_to_root(C, i, hld, bit_X))  # Time: O((logN)^2)
-    for j in xrange(len(adj[i])):  # set X to children of i
-        result = add(result, set_X(adj[i][j], hld, bit_B, bit_X, lookup_X))
+    result = add(result, query_X_to_root(i, hld, bit_X))  # Time: O((logN)^2)
+    for j in xrange(len(hld.adj(i))):  # set X to children of i
+        result = add(result, set_X(hld.adj(i)[j], hld, bit_B, bit_X, lookup_X))
     while i not in lookup_upward:  # set X to siblings of i and upwards
         lookup_upward.add(i)  # avoid duplicated upward
-        c = C[i]
+        c = hld.parent(i)
         if c < 0:
             break
-        for j in xrange(len(adj[c])):
-            if adj[c][j] != i:
-                result = add(result, set_X(adj[c][j], hld, bit_B, bit_X, lookup_X))
-        adj[c] = [i]  # only keep node which X is unset (optional)
+        for j in xrange(len(hld.adj(c))):
+            if hld.adj(c)[j] != i:
+                result = add(result, set_X(hld.adj(c)[j], hld, bit_B, bit_X, lookup_X))
         i = c
     return result
 
 def chain_of_command():
     N = input()
-    C = [0]*N
     adj = [[] for _ in xrange(N)]
     for i in xrange(N):
-        C[i] = input()-1
-        if C[i] < 0:
+        C = input()-1
+        if C < 0:
             root = i
         else:
-            adj[C[i]].append(i)
+            adj[C].append(i)
 
     hld = HLD(root, adj)
     bit_B, bit_X = BIT(N+1), BIT(N+1)
     lookup_X, lookup_upward = set(), set()
     result, curr = 1, 0
     for i in xrange(N):
-        curr = add(curr, bribe(C, i, adj, hld, bit_B, bit_X, lookup_X, lookup_upward))
+        curr = add(curr, bribe(i, hld, bit_B, bit_X, lookup_X, lookup_upward))
         result = mul(result, curr)
     return result
 
