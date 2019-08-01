@@ -1,4 +1,4 @@
-# [FacebookHackerCup-2019](https://www.facebook.com/hackercup/past_rounds/) ![Language](https://img.shields.io/badge/language-Python-orange.svg) [![License](https://img.shields.io/badge/license-CC%203.0-blue.svg)](https://creativecommons.org/licenses/by-nc/3.0/) ![Progress](https://img.shields.io/badge/progress-15%20%2F%2016-ff69b4.svg)
+# [FacebookHackerCup-2019](https://www.facebook.com/hackercup/past_rounds/) ![Language](https://img.shields.io/badge/language-Python-orange.svg) [![License](https://img.shields.io/badge/license-CC%203.0-blue.svg)](https://creativecommons.org/licenses/by-nc/3.0/) ![Progress](https://img.shields.io/badge/progress-16%20%2F%2016-ff69b4.svg)
 
 Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it will get TLE in the largest data set (total computation amount > `10^8`, which is not friendly for Python to solve in 5 ~ 15 seconds).
 
@@ -37,4 +37,4 @@ Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it 
 |1| [Light Show](https://www.facebook.com/hackercup/problem/2272127393102980/)| [Python](./Round%203/light_show.py)| _O(N^2)_ | _O(N)_ | Easy | | DP |
 |2| [Integers as a Service](https://www.facebook.com/hackercup/problem/367172063898266/)| [Python](./Round%203/integers_as_a_service.py)| _O(NlogN)_ | _O(1)_ | Medium | | Euclidean Algorithm, GCD, LCM |
 |3| [Renovations](https://www.facebook.com/hackercup/problem/2038302866474992/)| [Python](./Round%203/renovations.py) | _O(NlogK)_ | _O(N)_ | Medium | | Probability, Euler's Theorem |
-
+|4| [Chain of Command](https://www.facebook.com/hackercup/problem/427797291330788/)| [Python](./Round%203/chain_of_command.py) | _O(N*(logN)^2)_ | _O(N)_ | Hard | | Heavy-Light Decomposition, Stack, Recursion, BIT, Fenwick Tree |
