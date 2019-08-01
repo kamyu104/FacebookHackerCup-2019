@@ -84,9 +84,9 @@ class BIT(object):  # Fenwick Tree
 def query_X_to_root(i, hld, bit_X):
     count = 1
     while i >= 0:  # Time: O((logN)^2), O(logN) queries with O(logN) costs
-        j = hld.chain(i)
+        j = hld.chain(i)  # find head of chain
         count = add(count, bit_X.query(hld.left(i)+1)-bit_X.query(hld.left(j)))
-        i = hld.parent(j)
+        i = hld.parent(j)  # move to parent chain
     return count
 
 def query_B_in_subtree(i, hld, bit_B):
