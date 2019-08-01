@@ -42,7 +42,7 @@ class HLD(object):  # Heavy-Light Decomposition
         def postprocess(adj, size, i, j, c):
             size[i] += size[c]
             if size[c] > size[adj[i][0]]:
-                adj[i][0], adj[i][j] = adj[i][j], adj[i][0]
+                adj[i][0], adj[i][j] = adj[i][j], adj[i][0]  # put heavy idx in adj[i][0]
 
         stk = []
         stk.append(partial(divide, stk, self.__adj, self.__size, i))
