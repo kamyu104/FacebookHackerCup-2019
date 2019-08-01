@@ -73,14 +73,14 @@ class HLD(object):  # Heavy-Light Decomposition
         while stk:
             stk.pop()()
 
-    def nxt(self, i):
-        return self.__nxt[i]
-
     def left(self, i):
         return self.__left[i]
 
     def right(self, i):
         return self.__right[i]
+
+    def nxt(self, i):
+        return self.__nxt[i]
 
 class BIT(object):  # Fenwick Tree
     def __init__(self, n):
