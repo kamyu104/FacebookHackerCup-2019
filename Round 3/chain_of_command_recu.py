@@ -111,7 +111,7 @@ def bribe(i, hld, bit_B, bit_X, lookup_X, lookup_upward):
         if p < 0:
             break
         for j in xrange(len(hld.children(p))):
-            if hld.children(p)[j] != i:
+            if hld.children(p)[j] != i:  # siblings of current i
                 result = add(result, set_X(hld.children(p)[j], hld, bit_B, bit_X, lookup_X))
         i = p
     return result
