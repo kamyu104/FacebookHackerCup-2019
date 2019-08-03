@@ -97,12 +97,14 @@ class BIT(object):  # Fenwick Tree
         self.__bit = [0] * n  # Space: O(N)
 
     def add(self, i, val):  # Time: O(logN)
+        i += 1
         while i < len(self.__bit):
             self.__bit[i] += val
             i += (i & -i)
 
     def query(self, i):  # Time: O(logN)
         ret = 0
+        i += 1
         while i > 0:
             ret += self.__bit[i]
             i -= (i & -i)
@@ -112,23 +114,23 @@ def query_X_to_root(i, hld, bit_X):
     count = 1
     while i >= 0:  # Time: O((logN)^2), O(logN) queries with O(logN) costs
         j = hld.chain(i)  # find head of chain
-        count = add(count, bit_X.query(hld.left(i)+1)-bit_X.query(hld.left(j)))
+        count = add(count, bit_X.query(hld.left(i))-bit_X.query(hld.left(j)-1))
         i = hld.parent(j)  # move to parent chain
     return count
 
 def query_B_in_subtree(i, hld, bit_B):
-    return bit_B.query(hld.right(i))-bit_B.query(hld.left(i))
+    return bit_B.query(hld.right(i)-1)-bit_B.query(hld.left(i)-1)
 
 def set_X(i, hld, bit_B, bit_X, lookup_X):
     if i in lookup_X:
         return 0
     lookup_X.add(i)
-    bit_X.add(hld.left(i)+1, 1)
+    bit_X.add(hld.left(i), 1)
     return query_B_in_subtree(i, hld, bit_B)
 
 def bribe(i, hld, bit_B, bit_X, lookup_X, lookup_upward):
     result = 0
-    bit_B.add(hld.left(i)+1, 1)  # set B to i
+    bit_B.add(hld.left(i), 1)  # set B to i
     result = add(result, query_X_to_root(i, hld, bit_X))  # Time: O((logN)^2)
     for j in xrange(len(hld.children(i))):  # set X to children of i
         result = add(result, set_X(hld.children(i)[j], hld, bit_B, bit_X, lookup_X))
