@@ -67,7 +67,7 @@ class HLD(object):  # Heavy-Light Decomposition
 
 class BIT(object):  # Fenwick Tree
     def __init__(self, n):
-        self.__bit = [0] * n  # Space: O(N)
+        self.__bit = [0]*(n+1)  # Space: O(N)
 
     def add(self, i, val):  # Time: O(logN)
         i += 1
@@ -129,7 +129,7 @@ def chain_of_command():
             adj[C].append(i)
 
     hld = HLD(root, adj)
-    bit_B, bit_X = BIT(N+1), BIT(N+1)
+    bit_B, bit_X = BIT(N), BIT(N)
     lookup_X, lookup_upward = set(), set()
     result, curr = 1, 0
     for i in xrange(N):
