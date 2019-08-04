@@ -19,13 +19,13 @@ def class_treasurer():
         else:
             cnt += 1
             if cnt > K:
-                result = (result + POW[i]) % MOD
+                result = (result + POW[i+1]) % MOD
                 cnt = max(cnt-2, 0)
     return result
 
 MOD = 10**9+7
-POW = [0]*10**6
-POW[0] = 2
+POW = [0]*(10**6+1)
+POW[0] = 1
 for i in xrange(1, len(POW)):
     POW[i] = POW[i-1]*2 % MOD
 for case in xrange(input()):
