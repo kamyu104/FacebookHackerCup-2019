@@ -12,7 +12,6 @@ from collections import deque
 # Time:  O(V^2 * E)
 # Space: O(V + E)
 class Dinic(object):
-
     def __init__(self, n):
         self.adj = [[] for _ in xrange(n)]
     
