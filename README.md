@@ -47,5 +47,5 @@ Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it 
 |2| [Khajiit](https://www.facebook.com/hackercup/problem/536189700557596/)| | | | Easy | | |
 |3| [Scoreboard](https://www.facebook.com/hackercup/problem/690405368129547/)| | | | Easy| | |
 |4| [Little Boat on the Sea](https://www.facebook.com/hackercup/problem/1956356724467896/)| | | | Medium | | |
-|5| [Cold Storage](https://www.facebook.com/hackercup/problem/2506463429376063/| | | | Medium | | |
+|5| [Cold Storage](https://www.facebook.com/hackercup/problem/2506463429376063/)| | | | Medium | | |
 |6| [Temporal Revision](https://www.facebook.com/hackercup/problem/1165177510537433/)| | | | Hard | | |
