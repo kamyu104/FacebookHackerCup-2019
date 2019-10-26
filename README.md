@@ -6,6 +6,7 @@ Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it 
 * [Round 1](https://github.com/kamyu104/FacebookHackerCup-2019#round-1)
 * [Round 2](https://github.com/kamyu104/FacebookHackerCup-2019#round-2)
 * [Round 3](https://github.com/kamyu104/FacebookHackerCup-2019#round-3)
+* [Final Round](https://github.com/kamyu104/FacebookHackerCup-2019#final-round)
 
 ## Qualification Round
 | # | Title | Solution | Time | Space | Difficulty | Tag | Note |
@@ -38,3 +39,13 @@ Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it 
 |2| [Integers as a Service](https://www.facebook.com/hackercup/problem/367172063898266/)| [Python](./Round%203/integers_as_a_service.py)| _O(NlogN)_ | _O(1)_ | Medium | | Euclidean Algorithm, GCD, LCM |
 |3| [Renovations](https://www.facebook.com/hackercup/problem/2038302866474992/)| [Python](./Round%203/renovations.py) | _O(NlogK)_ | _O(N)_ | Medium | | Probability, Euler's Theorem |
 |4| [Chain of Command](https://www.facebook.com/hackercup/problem/427797291330788/)| [Python](./Round%203/chain_of_command.py) | _O(N * (logN)^2)_ | _O(N)_ | Hard | | Heavy-Light Decomposition, Stack, Recursion, BIT, Fenwick Tree |
+
+## Final Round
+| # | Title | Solution | Time | Space | Difficulty | Tag | Note |
+|---| ----- | -------- | ---- | ----- | ---------- | --- | ---- |
+|1| [Strings as a Service](https://www.facebook.com/hackercup/problem/546199162815522/)| | | | Easy | | |
+|2| [Khajiit](https://www.facebook.com/hackercup/problem/536189700557596/)| | | | Easy | | |
+|3| [Scoreboard](https://www.facebook.com/hackercup/problem/690405368129547/)| | | | Easy| | |
+|4| [Little Boat on the Sea](https://www.facebook.com/hackercup/problem/1956356724467896/)| | | | Medium | | |
+|5| [Cold Storage](https://www.facebook.com/hackercup/problem/2506463429376063/| | | | Medium | | |
+|6| [Temporal Revision](https://www.facebook.com/hackercup/problem/1165177510537433/)| | | | Hard | | |
