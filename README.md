@@ -41,6 +41,8 @@ Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it 
 |4| [Chain of Command](https://www.facebook.com/hackercup/problem/427797291330788/)| [Python](./Round%203/chain_of_command.py) | _O(N * (logN)^2)_ | _O(N)_ | Hard | | Heavy-Light Decomposition, Stack, Recursion, BIT, Fenwick Tree |
 
 ## Final Round
+You can relive the magic of the 2019 Hacker Cup World Finals by watching the [Live Stream Recording](https://www.facebook.com/hackercup/videos/783011162119849/) of the announcement of winners.
+
 | # | Title | Solution | Time | Space | Difficulty | Tag | Note |
 |---| ----- | -------- | ---- | ----- | ---------- | --- | ---- |
 |1| [Strings as a Service](https://www.facebook.com/hackercup/problem/546199162815522/)| | | | Easy | | |
