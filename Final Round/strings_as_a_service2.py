@@ -25,10 +25,10 @@ LOOKUP = {}
 for i in xrange(MAX_L):
     for j in xrange(i, MAX_L):
         for k in xrange(j, MAX_L-i-j+1):
-            tmp = sum(imap(triangular_num, [i, j, k]))
-            if tmp in LOOKUP or tmp > MAX_K:
+            count = sum(imap(triangular_num, [i, j, k]))
+            if count in LOOKUP or count > MAX_K:
                 continue
-            LOOKUP[tmp] = filter(lambda x: x != 0, [i, j, k])
+            LOOKUP[count] = filter(lambda x: x != 0, [i, j, k])
 assert(len(LOOKUP) == MAX_K+1)
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, strings_as_a_service())
