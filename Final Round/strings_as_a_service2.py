@@ -28,7 +28,7 @@ for i in xrange(MAX_L):
             tmp = sum(imap(triangular_num, [i, j, k]))
             if tmp in LOOKUP or tmp > MAX_K:
                 continue
-            LOOKUP[tmp] = filter(lambda x: x!= 0, [i, j, k])
+            LOOKUP[tmp] = filter(lambda x: x != 0, [i, j, k])
 assert(len(LOOKUP) == MAX_K+1)
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, strings_as_a_service())
