@@ -27,7 +27,7 @@ def strings_as_a_service():
     while K > 0:
         l = binary_search(1, K, partial(check, K))
         K -= l*(l+1)//2
-        result.append(chr(ord("A")+len(result)%3)*l)
+        result.append(chr(ord('A')+len(result)%3)*l)
     return "".join(result)
 
 for case in xrange(input()):
