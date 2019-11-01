@@ -25,6 +25,7 @@ LOOKUP = {}
 for i in xrange(MAX_L):
     for j in xrange(i, MAX_L):
         for k in xrange(j, MAX_L-i-j+1):
+            assert(i+j+k <= MAX_L)
             count = sum(imap(triangular_num, [i, j, k]))
             if count in LOOKUP or count > MAX_K:
                 continue
