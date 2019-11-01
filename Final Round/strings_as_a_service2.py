@@ -29,6 +29,5 @@ for i in xrange(MAX_L):
             if tmp in LOOKUP or tmp > MAX_K:
                 continue
             LOOKUP[tmp] = [i, j, k]
-
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, strings_as_a_service())
