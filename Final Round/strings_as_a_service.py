@@ -12,7 +12,7 @@ from functools import partial
 def check(K, x):
     return x*(x+1)//2 <= K
 
-def binary_search(left, right, check):
+def binary_search_right(left, right, check):
     while left <= right:
         mid = left + (right-left)//2
         if not check(mid):
@@ -25,7 +25,7 @@ def strings_as_a_service():
     K = input()
     result = []
     while K > 0:
-        l = binary_search(1, K, partial(check, K))
+        l = binary_search_right(1, K, partial(check, K))
         K -= l*(l+1)//2
         result.append(chr(ord('A')+len(result)%3)*l)
     return "".join(result)
