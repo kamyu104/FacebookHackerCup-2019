@@ -47,7 +47,7 @@ You can relive the magic of the 2019 Hacker Cup World Finals by watching the [Li
 |---| ----- | -------- | ---- | ----- | ---------- | --- | ---- |
 |1| [Strings as a Service](https://www.facebook.com/hackercup/problem/546199162815522/)|[Python](./Final%20Round/strings_as_a_service.py) [Python](./Final%20Round/strings_as_a_service2.py) | _O(KlogK)_ | _O(1)_ | Easy | | Greedy |
 |2| [Khajiit](https://www.facebook.com/hackercup/problem/536189700557596/)| [Python](./Final%20Round/khajiit.py) | _O(N * M)_ | _O(1)_ | Easy | | Greedy |
-|3| [Scoreboard](https://www.facebook.com/hackercup/problem/690405368129547/)| | | | Easy| | |
+|3| [Scoreboard](https://www.facebook.com/hackercup/problem/690405368129547/)| [Python](./Final%20Round/scoreboard.py) | _O(N ^2* M)_ | _O(1)_ | Easy| | |
 |4| [Little Boat on the Sea](https://www.facebook.com/hackercup/problem/1956356724467896/)| | | | Medium | | |
 |5| [Cold Storage](https://www.facebook.com/hackercup/problem/2506463429376063/)| | | | Medium | | |
 |6| [Temporal Revision](https://www.facebook.com/hackercup/problem/1165177510537433/)| | | | Hard | | |
