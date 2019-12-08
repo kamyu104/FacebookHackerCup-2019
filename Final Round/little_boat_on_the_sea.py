@@ -90,35 +90,42 @@ class SegmentTree(object):
         return ",".join(map(str, showList))
 
 def find_tree_infos(E):
-    def dfs(curr, prev, c):  # TODO
+    def preprocess(L, D, P, C, curr, parent):
         # depth of the node i
-        D[curr] = 1 if prev == -1 else D[prev]+1
-
+        D[curr] = 1 if parent == -1 else D[parent]+1
         # ancestors of the node i
-        P[curr].append(prev)
+        P[curr].append(parent)
         i = 0
         while P[curr][i] != -1:
             P[curr].append(P[P[curr][i]][i] if i < len(P[P[curr][i]]) else -1)
             i += 1
-
         # the subtree of the node i is represented by traversal index L[i]..R[i]
-        c[0] += 1
-        L[curr] = c[0]
-        for child in E[curr]:
-            if child == prev:
-                continue
-            dfs(child, curr, c)
-        R[curr] = c[0]
+        C[0] += 1
+        L[curr] = C[0]
 
-    L, R, D, P = {}, {}, {}, defaultdict(list)
-    c = [-1]
-    dfs(0, -1, c)
-    assert(max(L) == max(R) == c[0])
+    def divide(stk, L, R, D, P, C, curr, parent):
+        stk.append(partial(postprocess, R, C, curr))
+        for i in reversed(xrange(len(E[curr]))):
+            child = E[curr][i]
+            if child == parent:
+                continue
+            stk.append(partial(divide, stk, L, R, D, P, C, child, curr))
+        stk.append(partial(preprocess, L, D, P, C, curr, parent))
+
+    def postprocess(R, C, curr):
+        R[curr] = C[0]
+
+    L, R, D, P, C = {}, {}, {}, defaultdict(list), [-1]
+    stk = []
+    stk.append(partial(divide, stk, L, R, D, P, C, 0, -1))
+    while stk:
+        stk.pop()()
     return L, R, D, P
 
 def find_invalidated_rectangles(A, L, R, D, P):
     def is_ancestor(L, R, a, b):
-        return L[a] <= L[b] <= R[b] <= R[a]
+        return a != b and \
+               L[a] <= L[b] <= R[b] <= R[a]
 
     def find_ancestor_with_depth(P, curr, d):
         i, pow_i_of_2 = 0, 1
