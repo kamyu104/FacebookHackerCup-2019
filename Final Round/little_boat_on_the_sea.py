@@ -89,7 +89,7 @@ class SegmentTree(object):
         return showList
 
 def find_tree_infos(E):
-    # do iteratiely dfs find the followings:
+    # do iteratively dfs find the followings:
     # 1. depth of the node i
     # 2. ancestors of the node i
     # 3. the subtree of the node i, which is represented by traversal index L[i]..R[i]
