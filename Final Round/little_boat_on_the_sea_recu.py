@@ -9,6 +9,7 @@
 
 from collections import defaultdict
 from functools import partial
+from sys import setrecursionlimit
 
 # Template:
 # https://github.com/kamyu104/FacebookHackerCup-2018/blob/master/Round%202/fossil_fuels.py
@@ -90,36 +91,28 @@ class SegmentTree(object):
         return ",".join(map(str, showList))
 
 def find_tree_infos(N, E):
-    def preprocess(L, D, P, C, curr, parent):
+    def dfs(curr, prev, c):  # this would exceed recusion depth limit
         # depth of the node i
-        D[curr] = 1 if parent == -1 else D[parent]+1
+        D[curr] = 1 if prev == -1 else D[prev]+1
+
         # ancestors of the node i
-        P[curr].append(parent)
+        P[curr].append(prev)
         i = 0
         while P[curr][i] != -1:
             P[curr].append(P[P[curr][i]][i] if i < len(P[P[curr][i]]) else -1)
             i += 1
+
         # the subtree of the node i is represented by traversal index L[i]..R[i]
-        C[0] += 1
-        L[curr] = C[0]
-
-    def divide(stk, L, R, D, P, C, curr, parent):
-        stk.append(partial(postprocess, R, C, curr))
-        for i in reversed(xrange(len(E[curr]))):
-            child = E[curr][i]
-            if child == parent:
+        c[0] += 1
+        L[curr] = c[0]
+        for child in E[curr]:
+            if child == prev:
                 continue
-            stk.append(partial(divide, stk, L, R, D, P, C, child, curr))
-        stk.append(partial(preprocess, L, D, P, C, curr, parent))
-
-    def postprocess(R, C, curr):
-        R[curr] = C[0]
+            dfs(child, curr, c)
+        R[curr] = c[0]
 
     L, R, D, P, C = [0]*N, [0]*N, [0]*N, [[] for _ in xrange(N)], [-1]
-    stk = []
-    stk.append(partial(divide, stk, L, R, D, P, C, 0, -1))
-    while stk:
-        stk.pop()()
+    dfs(0, -1, C)
     assert(C[0] == N-1)
     return L, R, D, P
 
@@ -212,5 +205,7 @@ def little_boat_on_the_sea():
     O, C = find_invalidated_rectangles(N, A, L, R, D, P)
     return line_sweep(N, O, C)
 
+MAX_N = 800000
+setrecursionlimit(MAX_N+2)  # ulimit -S -s unlimited
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, little_boat_on_the_sea())
