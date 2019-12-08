@@ -121,12 +121,12 @@ def find_invalidated_rectangles(A, L, R, D, P):
         return L[a] <= L[b] <= R[b] <= R[a]
 
     def find_ancestor_with_depth(P, curr, d):
-        i, x = 0, 1
-        while x <= d:
-            if d & x:
+        i, pow_i_of_2 = 0, 1
+        while pow_i_of_2 <= d:
+            if d & pow_i_of_2:
                 curr = P[curr][i]
             i += 1
-            x *= 2
+            pow_i_of_2 *= 2
         return curr
 
     def add_rectangle(l1, r1, l2, r2, O, C):
