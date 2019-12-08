@@ -90,18 +90,19 @@ class SegmentTree(object):
         return ",".join(map(str, showList))
 
 def find_tree_infos(E):
-    # do iteratively dfs to find the followings:
-    # 1. depth of the node i
-    # 2. ancestors of the node i
-    # 3. the subtree of the node i, which is represented by traversal index L[i]..R[i]
     def dfs(curr, prev, c):  # TODO
-        D[curr] = 1 if prev == -1 else D[prev] + 1
+        # depth of the node i
+        D[curr] = 1 if prev == -1 else D[prev]+1
+
+        # ancestors of the node i
         P[curr].append(prev)
         i = 0
         while P[curr][i] != -1:
             P[curr].append(P[P[curr][i]][i] if i < len(P[P[curr][i]]) else -1)
             i += 1
         c[0] += 1
+
+        # the subtree of the node i is represented by traversal index L[i]..R[i]
         L[curr] = c[0]
         for child in E[curr]:
             if child == prev:
@@ -155,16 +156,9 @@ def find_invalidated_rectangles(A, L, R, D, P):
     return O, C  # open intervals and close intervals of the invalidated rectangles
 
 def line_sweep(O, C):
-    # line sweep in one dimension and update a segment tree over the other dimension, 
-    # of which nodes stores the minimum number of rectangles covering any of the cells in its interval and
-    # the number of cells covered by that minimum number of rectangles.
-    # sum up the total number of cells covered by 0 rectangles from segment tree in range [1, N] in each iteration,
-    # the result would be sum(cells) - N
-
     def build_fn(N, default_val):
-        # tree stores:
-        # [minimum number of rectangles covering any of the cells in its interval,
-        #  the number of cells covered by that minimum number of rectangles]
+        # tree[x]: [minimum number of rectangles covering any of the cells in its interval,
+        #           the number of cells covered by that minimum number of rectangles]
         tree = [None]*(2*N)
         for x in reversed(xrange(1, len(tree))):
             tree[x] = [0, 1 if x >= N else tree[x*2][1]+tree[x*2+1][1]]
