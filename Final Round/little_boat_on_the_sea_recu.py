@@ -174,7 +174,7 @@ def line_sweep(N, O, C):
         return [x[0]+y[0], x[1]]
 
     result = 0
-    segment_tree = SegmentTree(N, build_fn, query_fn, update_fn, [float("inf"), float("inf")])
+    segment_tree = SegmentTree(N, build_fn, query_fn, update_fn, [float("inf"), None])
     for i in xrange(N):
         if i in O:
             for l, r in O[i]:
