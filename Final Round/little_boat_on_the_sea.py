@@ -182,7 +182,7 @@ def line_sweep(N, O, C):
 
     result = 0
     segment_tree = SegmentTree(N, build_fn, query_fn, update_fn, [float("inf"), None])
-    for i in xrange(N):
+    for i in xrange(N+1):
         if i in O:
             for l, r in O[i]:
                 segment_tree.update(l, r, [+1, None])
@@ -191,8 +191,11 @@ def line_sweep(N, O, C):
                 segment_tree.update(l, r, [-1, None])
         rmq = segment_tree.query(0, N-1)
         assert(rmq[0] == 0)
-        result += rmq[1]-1  # -1 to exclude (i, i)
-    return result
+        if i < N:
+            result += rmq[1]
+        else:
+            assert(rmq[1] == N)
+    return result-N  # discounting the path from each node to itself
 
 def little_boat_on_the_sea():
     N = input()
