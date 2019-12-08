@@ -89,7 +89,7 @@ class SegmentTree(object):
             showList.append(self.query(i, i))
         return ",".join(map(str, showList))
 
-def find_tree_infos(E):
+def find_tree_infos(N, E):
     def preprocess(L, D, P, C, curr, parent):
         # depth of the node i
         D[curr] = 1 if parent == -1 else D[parent]+1
@@ -115,14 +115,15 @@ def find_tree_infos(E):
     def postprocess(R, C, curr):
         R[curr] = C[0]
 
-    L, R, D, P, C = {}, {}, {}, defaultdict(list), [-1]
+    L, R, D, P, C = [0]*N, [0]*N, [0]*N, [[] for _ in xrange(N)], [-1]
     stk = []
     stk.append(partial(divide, stk, L, R, D, P, C, 0, -1))
     while stk:
         stk.pop()()
+    assert(C[0] == N-1)
     return L, R, D, P
 
-def find_invalidated_rectangles(A, L, R, D, P):
+def find_invalidated_rectangles(N, A, L, R, D, P):
     def is_ancestor(L, R, a, b):
         return a != b and \
                L[a] <= L[b] <= R[b] <= R[a]
@@ -142,8 +143,7 @@ def find_invalidated_rectangles(A, L, R, D, P):
         O[l2].append((l1, r1))
         C[r2+1].append((l1, r1))
 
-    N = len(L)
-    O, C = [[] for _ in xrange(N+1)], [[] for _ in xrange(N+1)]
+    O, C = defaultdict(list), defaultdict(list)
     for Ai in A.itervalues():
         if len(Ai) != 2:
             continue
@@ -162,7 +162,7 @@ def find_invalidated_rectangles(A, L, R, D, P):
             add_rectangle(L[a], R[a], L[b], R[b], O, C)
     return O, C  # open intervals and close intervals of the invalidated rectangles
 
-def line_sweep(O, C):
+def line_sweep(N, O, C):
     def build_fn(N, default_val):
         # tree[x]: [minimum number of rectangles covering any of the cells in its interval,
         #           the number of cells covered by that minimum number of rectangles]
@@ -181,14 +181,15 @@ def line_sweep(O, C):
             return y
         return [x[0]+y[0], x[1]]
 
-    N = len(O)-1
     result = 0
     segment_tree = SegmentTree(N, build_fn, query_fn, update_fn, [float("inf"), float("inf")])
     for i in xrange(N):
-        for l, r in O[i]:
-            segment_tree.update(l, r, [+1, None])
-        for l, r in C[i]:
-            segment_tree.update(l, r, [-1, None])
+        if i in O:
+            for l, r in O[i]:
+                segment_tree.update(l, r, [+1, None])
+        if i in C:
+            for l, r in C[i]:
+                segment_tree.update(l, r, [-1, None])
         rmq = segment_tree.query(0, N-1)
         assert(rmq[0] == 0)
         result += rmq[1]-1  # -1 to exclude (i, i)
@@ -208,9 +209,9 @@ def little_boat_on_the_sea():
         E[u-1].append(v-1)
         E[v-1].append(u-1)
 
-    L, R, D, P = find_tree_infos(E)
-    O, C = find_invalidated_rectangles(A, L, R, D, P)
-    return line_sweep(O, C)
+    L, R, D, P = find_tree_infos(N, E)
+    O, C = find_invalidated_rectangles(N, A, L, R, D, P)
+    return line_sweep(N, O, C)
 
 for case in xrange(input()):
     print 'Case #%d: %s' % (case+1, little_boat_on_the_sea())
