@@ -117,8 +117,7 @@ def find_tree_infos(E):
 
 def find_invalidated_rectangles(A, L, R, D, P):
     def is_ancestor(L, R, a, b):
-        return L[a] < L[b] <= R[b] <= R[a] or \
-               L[a] <= L[b] <= R[b] < R[a]
+        return L[a] <= L[b] <= R[b] <= R[a]
 
     def find_ancestor_with_depth(P, curr, d):
         i, x = 0, 1
