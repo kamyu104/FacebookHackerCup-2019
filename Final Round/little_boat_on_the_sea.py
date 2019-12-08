@@ -10,7 +10,8 @@
 from collections import defaultdict
 from functools import partial
 
-# Template from https://github.com/kamyu104/FacebookHackerCup-2018/blob/master/Round%202/fossil_fuels.py
+# Template:
+# https://github.com/kamyu104/FacebookHackerCup-2018/blob/master/Round%202/fossil_fuels.py
 class SegmentTree(object):
     def __init__(self, N,
                  build_fn=lambda x, y: [y]*(2*x),
@@ -30,7 +31,7 @@ class SegmentTree(object):
         if x < self.N:
             self.lazy[x] = self.update_fn(self.lazy[x], val)
 
-    def update(self, L, R, h):
+    def update(self, L, R, h):  # Time: O(logN), Space: O(N)
         def pull(x):
             while x > 1:
                 x //= 2
@@ -52,7 +53,7 @@ class SegmentTree(object):
         pull(L0)
         pull(R0)
 
-    def query(self, L, R):
+    def query(self, L, R):  # Time: O(logN), Space: O(N)
         def push(x):
             n = 2**self.H
             while n != 1:
@@ -89,7 +90,7 @@ class SegmentTree(object):
         return showList
 
 def find_tree_infos(E):
-    # do iteratively dfs find the followings:
+    # do iteratively dfs to find the followings:
     # 1. depth of the node i
     # 2. ancestors of the node i
     # 3. the subtree of the node i, which is represented by traversal index L[i]..R[i]
@@ -119,7 +120,7 @@ def find_invalidated_rectangles(A, L, R, D, P):
         return L[a] < L[b] <= R[b] <= R[a] or \
                L[a] <= L[b] <= R[b] < R[a]
 
-    def find_ancestor(P, curr, d):
+    def find_ancestor_with_depth(P, curr, d):
         i, x = 0, 1
         while x <= d:
             if d & x:
@@ -143,7 +144,7 @@ def find_invalidated_rectangles(A, L, R, D, P):
         if is_ancestor(L, R, b, a):
             a, b = b, a
         if is_ancestor(L, R, a, b):
-            c = find_ancestor(P, b, D[b]-D[a]-1)
+            c = find_ancestor_with_depth(P, b, D[b]-D[a]-1)
             assert(P[c][0] == a)
             assert(L[c] <= L[b] <= R[b] <= R[c])
             if 0 <= L[c]-1:
@@ -196,13 +197,13 @@ def line_sweep(O, C):
 def little_boat_on_the_sea():
     N = input()
     A = defaultdict(list)
-    E = defaultdict(list)
     for i in xrange(N):
         Ai = raw_input().strip()
         if Ai == "-":
             continue
         A[Ai].append(i)
-    for i in xrange(N-1):
+    E = defaultdict(list)
+    for _ in xrange(N-1):
         u, v = map(int, raw_input().strip().split())
         E[u-1].append(v-1)
         E[v-1].append(u-1)
