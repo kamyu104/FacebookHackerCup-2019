@@ -100,9 +100,9 @@ def find_tree_infos(E):
         while P[curr][i] != -1:
             P[curr].append(P[P[curr][i]][i] if i < len(P[P[curr][i]]) else -1)
             i += 1
-        c[0] += 1
 
         # the subtree of the node i is represented by traversal index L[i]..R[i]
+        c[0] += 1
         L[curr] = c[0]
         for child in E[curr]:
             if child == prev:
