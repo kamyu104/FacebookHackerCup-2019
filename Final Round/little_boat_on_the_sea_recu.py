@@ -3,7 +3,7 @@
 # Facebook Hacker Cup 2019 Final Round - Little Boat on the Sea
 # https://www.facebook.com/hackercup/problem/1956356724467896/
 #
-# Time:  O(NlogN)
+# Time:  O(NlogN), TLE in PyPy2
 # Space: O(N)
 #
 
