@@ -110,7 +110,7 @@ def find_tree_infos(E):
             dfs(child, curr, c)
         R[curr] = c[0]
 
-    L, R, D, P = {}, {}, defaultdict(int), defaultdict(list)
+    L, R, D, P = {}, {}, {}, defaultdict(list)
     c = [-1]
     dfs(0, -1, c)
     assert(max(L) == max(R) == c[0])
