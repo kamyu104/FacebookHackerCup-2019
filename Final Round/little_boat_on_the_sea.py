@@ -83,11 +83,11 @@ class SegmentTree(object):
             R //= 2
         return result
     
-    def data(self):
+    def __str__(self):
         showList = []
         for i in xrange(self.N):
             showList.append(self.query(i, i))
-        return showList
+        return ",".join(map(str, showList))
 
 def find_tree_infos(E):
     # do iteratively dfs to find the followings:
