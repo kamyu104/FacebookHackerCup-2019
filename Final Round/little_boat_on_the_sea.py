@@ -179,9 +179,9 @@ def line_sweep(O, C):
     segment_tree = SegmentTree(N, build_fn, query_fn, update_fn, [float("inf"), float("inf")])
     for i in xrange(N):
         for l, r in O[i]:
-            segment_tree.update(l, r, [+1, 0])
+            segment_tree.update(l, r, [+1, None])
         for l, r in C[i]:
-            segment_tree.update(l, r, [-1, 0])
+            segment_tree.update(l, r, [-1, None])
         rmq = segment_tree.query(0, N-1)
         assert(rmq[0] == 0)
         result += rmq[1]-1  # -1 to exclude (i, i)
