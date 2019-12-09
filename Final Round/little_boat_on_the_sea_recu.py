@@ -43,10 +43,10 @@ class SegmentTree(object):
         R += self.N
         L0, R0 = L, R
         while L <= R:
-            if L & 1:
+            if L & 1:  # is right child
                 self.__apply(L, h)
                 L += 1
-            if R & 1 == 0:
+            if R & 1 == 0:  # is left child
                 self.__apply(R, h)
                 R -= 1
             L //= 2
@@ -74,10 +74,10 @@ class SegmentTree(object):
         push(L)
         push(R)
         while L <= R:
-            if L & 1:
+            if L & 1:  # is right child
                 result = self.query_fn(result, self.tree[L])
                 L += 1
-            if R & 1 == 0:
+            if R & 1 == 0:  # is left child
                 result = self.query_fn(result, self.tree[R])
                 R -= 1
             L //= 2
