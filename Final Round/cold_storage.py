@@ -38,7 +38,7 @@ def cold_storage():
 
 MAX_N = 8000
 MAX_H = 100000
-INF = (MAX_N-1)*(MAX_H)  # float("inf") costs more time to allocate
+INF = (MAX_N-1)*MAX_H  # float("inf") costs more time to allocate
 # large memory allocation costs lots of time, thus make them as global variables
 dp = [[[INF for _ in xrange(2)] for _ in xrange(MAX_N)] for _ in xrange(MAX_N)]
 max_H = [[0 for _ in xrange(MAX_N)] for _ in xrange(MAX_N)]
