@@ -22,7 +22,7 @@ def cold_storage():
     dp[0][N-1][L] = dp[0][N-1][R] = 0
     for i in xrange(N):
         for j in reversed(xrange(i+1, N)):
-            max_h = max(min(dp[i][j][L], dp[i][j][R]), max_H[i][j])
+            max_h = max(max_H[i][j], min(dp[i][j][L], dp[i][j][R]))
             dp[i][j][L] = min(dp[i][j][L], max_h)
             dp[i][j][R] = min(dp[i][j][R], max_h)
             dp[i+1][j][L] = min(dp[i+1][j][L], max(H[i], dp[i][j][L]+H[i]-F[i]))
