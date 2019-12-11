@@ -4,7 +4,7 @@
 # https://www.facebook.com/hackercup/problem/1956356724467896/
 #
 # Time:  O(NlogN)
-# Space: O(N)
+# Space: O(NlogN), due to skip-list of tree node ancestors
 #
 
 from collections import defaultdict
