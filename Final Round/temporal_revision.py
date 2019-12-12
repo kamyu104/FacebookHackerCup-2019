@@ -145,7 +145,7 @@ def temporal_revision():
         else:  # E[i] == 3
             activity_type[V[i]] |= CLOSE
             end_hr[V[i]] = i
-    for i in xrange(M):  # make remaining conduit split into only one planet
+    for i in xrange(M):  # make remaining conduits as branch points
         if is_collapsed[i] == False:
             E.append(1), V.append(i)
     for i in xrange(N):
