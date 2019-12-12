@@ -151,7 +151,7 @@ def temporal_revision():
             E.append(1), V.append(i)
     for i in xrange(N):
         if activity_type[i] == OPEN:
-            end_hr[i] = len(E)  # make the max time to end activity
+            end_hr[i] = len(E)  # set the max time to end activity
 
     node_count, children, when, curr_active_cnt_from_node, dp1, dp2 = build_binary_tree(N, A, B, E, V, activity_type)
     L, R, P = find_binary_tree_infos(node_count, children)
