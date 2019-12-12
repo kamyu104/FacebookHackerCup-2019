@@ -76,9 +76,8 @@ def build_binary_tree(N, A, B, E, V, activity_type):
         curr_active_cnt_from_node[i] = int(activity_type[i] == OPEN)
     dp1, dp2 = defaultdict(int), defaultdict(int)
     for i in reversed(xrange(len(E))):  # O((M+K)*alpha(N))
-        q = V[i]
         if E[i] == 1:
-            x, y = union_find.find_set(A[q]), union_find.find_set(B[q])
+            x, y = union_find.find_set(A[V[i]]), union_find.find_set(B[V[i]])
             if x == y:
                 continue
             v = union_find.get_id()
@@ -88,7 +87,7 @@ def build_binary_tree(N, A, B, E, V, activity_type):
             dp1[v] = max(dp1[x], dp1[y])
             dp2[v] = max(dp2[x], dp2[y], dp1[x]+dp1[y])
         else:
-            v, x = union_find.get_id(), union_find.find_set(q)
+            v, x = union_find.get_id(), union_find.find_set(V[i])
             union_find.union_set(v, x)
             children[v], when[v] = [x], i
             curr_active_cnt_from_node[v] = curr_active_cnt_from_node[x] + (-1 if E[i] == 2 else 1)  # -1 means not yet activated, +1 means activated
