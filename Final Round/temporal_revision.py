@@ -21,9 +21,13 @@ class UnionFind(object):
         return len(self.set)-1
 
     def find_set(self, x):
-        if self.set[x] != x:
-            self.set[x] = self.find_set(self.set[x])  # path compression.
-        return self.set[x]
+        stk = []
+        while self.set[x] != x:  # path compression.
+            stk.append(x)
+            x = self.set[x]
+        while stk:
+            self.set[stk.pop()] = x
+        return x
 
     def union_set(self, x, y):
         x_root, y_root = map(self.find_set, (x, y))
