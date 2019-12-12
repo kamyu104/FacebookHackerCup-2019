@@ -1,6 +1,6 @@
 # [FacebookHackerCup-2019](https://www.facebook.com/hackercup/past_rounds/) ![Language](https://img.shields.io/badge/language-Python-orange.svg) [![License](https://img.shields.io/badge/license-CC%203.0-blue.svg)](https://creativecommons.org/licenses/by-nc/3.0/) ![Progress](https://img.shields.io/badge/progress-22%20%2F%2022-ff69b4.svg)
 
-Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it will get TLE in the largest data set (total computation amount > `10^8`, which is not friendly for Python to solve in 5 ~ 15 seconds).
+Python solutions of Facebook Hacker Cup 2019. Solution begins with `*` means it will get TLE in the largest data set (total computation amount > `10^8`, which is not friendly for Python to solve in 5 ~ 15 seconds). A 6-minute timer is set for uploading result this year.
 
 * [Qualification Round](https://github.com/kamyu104/FacebookHackerCup-2019#qualification-round)
 * [Round 1](https://github.com/kamyu104/FacebookHackerCup-2019#round-1)
@@ -50,4 +50,4 @@ You can relive the magic of the 2019 Hacker Cup World Finals by watching the [Li
 |3| [Scoreboard](https://www.facebook.com/hackercup/problem/690405368129547/)| [Python](./Final%20Round/scoreboard.py) | _O(N ^2* M)_ | _O(1)_ | Easy| | Set |
 |4| [Little Boat on the Sea](https://www.facebook.com/hackercup/problem/1956356724467896/)| [PyPy](./Final%20Round/little_boat_on_the_sea.py) | _O(NlogN)_ | _O(NlogN)_ | Medium | | Preorder Traversal (Stack), Tree Ancestors (Skip List), Line Sweep, Segment Tree (Lazy Propagation), RMQ |
 |5| [Cold Storage](https://www.facebook.com/hackercup/problem/2506463429376063/)| [PyPy](./Final%20Round/cold_storage.py) | _O(N^2)_ | _O(N^2)_ | Medium | | DP |
-|6| [Temporal Revision](https://www.facebook.com/hackercup/problem/1165177510537433/)| [PyPy](./Final%20Round/temporal_revision.py) | _O((S + N) * logN + (K + M) * α(N))_ | _O(NlogN)_  | Hard | |  Union Find, DP, Preorder Traversal (Stack), Tree Ancestors (Skip List) |
+|6| [Temporal Revision](https://www.facebook.com/hackercup/problem/1165177510537433/)| [Python](./Final%20Round/temporal_revision.py) | _O((S + N) * logN + (K + M) * α(N))_ | _O(NlogN)_  | Hard | |  Union Find, DP, Preorder Traversal (Stack), Tree Ancestors (Skip List) |
