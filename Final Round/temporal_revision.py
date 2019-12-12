@@ -3,7 +3,7 @@
 # Facebook Hacker Cup 2019 Final Round - Temporal Revision
 # https://www.facebook.com/hackercup/problem/1165177510537433/
 #
-# Time:  O((S + N)logN + (M + K) * (log*)(N)), p.s. (log*)(N) <= 5
+# Time:  O((S + N) * logN + (M + K) * (log*)(N)), p.s. (log*)(N) <= 5
 # Space: O(NlogN), due to skip-list of tree node ancestors
 #
 
