@@ -110,7 +110,7 @@ def query_binary_tree(E, V, end_hr, children, when, curr_active_cnt_from_node, d
             break
         stk.append(v)
     stk = stk[::-1]
-    assert(len(stk) <= 25)
+    assert(len(stk) <= 24+1)
     active_cnt_to_the_end_from_hr = [0]*len(stk)
     accumulated_cnt = dp1[stk[-1]]
     for i in reversed(xrange(len(stk)-1)):
